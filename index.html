@@ -19,11 +19,7 @@
   --black: #0a0a0a;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -55,10 +51,7 @@ body {
   z-index: 1;
 }
 
-.hero-content {
-  position: relative;
-  z-index: 3;
-}
+.hero-content { position: relative; z-index: 3; }
 
 .logo-title {
   font-family: 'Playfair Display', serif;
@@ -88,187 +81,93 @@ body {
 .btn-primary { background: var(--crimson); color: var(--vanilla); }
 .btn-secondary { background: transparent; border: 2px solid var(--sandstone); color: var(--sandstone); }
 
-/* ================= SECTION 2 (Reveal) ================= */
-.section-2 {
+/* ================= NEW CARD SECTION (Interactive Fan) ================= */
+.section-cards {
   position: relative;
-  min-height: 100vh;
-  padding: 100px 10%;
+  min-height: 120vh;
+  padding: 100px 5%;
   background: var(--vanilla);
   color: var(--velvet);
   z-index: 10;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.section-2 h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  margin-bottom: 40px;
-}
-
-.problem-list {
-  font-size: 1.5rem;
-  line-height: 1.8;
-  max-width: 800px;
-}
-
-.problem-item {
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-/* ================= SECTION 3 (Video-Style Hover Reveal) ================= */
-.section-hover {
-  min-height: 100vh;
-  display: flex;
   align-items: center;
-  background: var(--black);
-  padding: 100px 10%;
-  gap: 80px;
-}
-
-.preview-stage {
-  flex: 0 0 450px;
-  height: 550px;
-  border-radius: 24px;
   overflow: hidden;
-  position: relative;
 }
 
-.image-slider {
+.section-cards h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 10px;
+}
+
+.card-stack-container {
+  position: relative;
+  height: 600px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+  margin-top: 40px;
 }
 
-.slide {
-  min-height: 550px;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: filter 0.5s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* The Secret Pop-up Content */
-.slide-overlay {
+.video-card {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2); /* Darken slightly */
+  width: 320px;
+  height: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--black);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255,255,255,0.1);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 40px;
-  opacity: 0; /* Hidden initially */
-  transition: opacity 0.5s ease;
+  justify-content: flex-end;
+  padding: 30px;
+}
+
+.video-card img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.card-text {
+  position: relative;
   z-index: 2;
+  color: white;
+  pointer-events: none;
 }
 
-.slide-overlay h3 {
+.card-text h3 {
   font-family: 'Playfair Display', serif;
-  color: #fff;
   font-size: 2rem;
-  margin-bottom: 15px;
-  transform: translateY(20px);
-  transition: transform 0.5s ease;
+  margin-bottom: 5px;
 }
 
-.slide-overlay p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-bottom: 25px;
-  transform: translateY(30px);
-  transition: transform 0.5s ease 0.1s;
-}
-
-.slide-btn {
-  align-self: flex-start;
-  padding: 12px 25px;
-  background: #fff;
-  color: #000;
-  border: none;
-  border-radius: 50px;
-  font-weight: 600;
+.card-text p {
   font-size: 0.9rem;
-  cursor: pointer;
-  transform: translateY(40px);
-  transition: all 0.5s ease 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.8;
 }
 
-/* Interaction: When cursor hovers over the image stage */
-.preview-stage:hover .slide img {
-  filter: blur(8px);
-  transform: scale(1.1);
+/* State: Card Selected/Focused */
+.video-card.is-focused {
+  z-index: 100 !important;
+  transform: scale(1.1) translateY(-40px) rotate(0deg) !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
 }
 
-.preview-stage:hover .slide-overlay {
-  opacity: 1;
-}
+.video-card.is-focused img { opacity: 1; }
 
-.preview-stage:hover .slide-overlay h3,
-.preview-stage:hover .slide-overlay p,
-.preview-stage:hover .slide-btn {
-  transform: translateY(0);
-}
-
-.services-list {
-  flex: 1;
-}
-
-.service-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 0;
-  border-bottom: 1px solid #222;
-  cursor: pointer;
-  opacity: 0.3;
-  transition: opacity 0.4s ease;
-}
-
-.service-name {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 400;
-  color: #fff;
-  transition: font-weight 0.3s ease;
-}
-
-.service-num {
-  font-size: 1rem;
-  color: #fff;
-  transition: color 0.3s ease;
-}
-
-/* Interaction States */
-.service-item:hover, .service-item.active {
-  opacity: 1;
-}
-
-.service-item.active .service-name {
-  font-weight: 700;
-}
-
-.service-item.active .service-num {
-  color: var(--crimson);
-}
-
-@media (max-width: 992px) {
-  .section-hover { flex-direction: column-reverse; padding: 50px 5%; }
-  .preview-stage { width: 100%; flex: 0 0 400px; }
-  .service-name { font-size: 2rem; }
-}
 </style>
 </head>
 
@@ -289,70 +188,41 @@ body {
     </div>
   </section>
 
-  <section class="section-2">
-    <h2>Why We Exist</h2>
-    <div class="problem-list">
-      <div class="problem-item">• Walk-in customers leave due to long wait times.</div>
-      <div class="problem-item">• Restaurants lose 15% revenue from manual queuing.</div>
-      <div class="problem-item">• Kitchens get overwhelmed by unmanaged crowds.</div>
-      <div class="problem-item">• Staff burnout from chaotic coordination.</div>
-    </div>
-  </section>
+  <section class="section-cards">
+    <h2>Our Vision</h2>
+    <p>Click to explore, Double Click to enter</p>
+  
+    <div class="card-stack-container" id="cardStack">
+      <div class="video-card" data-url="why-we-exist.html">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800" alt="Vision">
+        <div class="card-text">
+          <h3>Why We Exist</h3>
+          <p>The Mission</p>
+        </div>
+      </div>
 
-  <section class="section-hover">
-    <div class="preview-stage">
-      <div class="image-slider" id="imageSlider">
-        <div class="slide">
-          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Branding">
-          <div class="slide-overlay">
-            <h3>Eternal Glow</h3>
-            <p>Unveil your natural radiance with our vitamin-rich serums designed to hydrate and illuminate.</p>
-            <button class="slide-btn">Shop the Glow &rarr;</button>
-          </div>
-        </div>
-        <div class="slide">
-          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Development">
-          <div class="slide-overlay">
-            <h3>Modern Needs</h3>
-            <p>We develop powerful platforms that grow alongside your restaurant's evolving digital landscape.</p>
-            <button class="slide-btn">Learn More &rarr;</button>
-          </div>
-        </div>
-        <div class="slide">
-          <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" alt="Websites">
-          <div class="slide-overlay">
-            <h3>Digital Hub</h3>
-            <p>Crafting seamless websites that perform under pressure, just like your kitchen line.</p>
-            <button class="slide-btn">View Demos &rarr;</button>
-          </div>
-        </div>
-        <div class="slide">
-          <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=800&q=80" alt="Direction">
-          <div class="slide-overlay">
-            <h3>Get in Touch</h3>
-            <p>Ready to transform your flow? Our team is standing by to help you manage the chaos.</p>
-            <button class="slide-btn">Contact Us &rarr;</button>
-          </div>
+      <div class="video-card" data-url="need.html">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800" alt="Market">
+        <div class="card-text">
+          <h3>The Need</h3>
+          <p>Problem Solving</p>
         </div>
       </div>
-    </div>
 
-    <div class="services-list">
-      <div class="service-item active" data-index="0">
-        <span class="service-name">Why we exist?</span>
-        <span class="service-num">(01)</span>
+      <div class="video-card" data-url="website.html">
+        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800" alt="Tech">
+        <div class="card-text">
+          <h3>Website</h3>
+          <p>Digital Presence</p>
+        </div>
       </div>
-      <div class="service-item" data-index="1">
-        <span class="service-name">Need</span>
-        <span class="service-num">(02)</span>
-      </div>
-      <div class="service-item" data-index="2">
-        <span class="service-name">Website</span>
-        <span class="service-num">(03)</span>
-      </div>
-      <div class="service-item" data-index="3">
-        <span class="service-name">Contact Us </span>
-        <span class="service-num">(04)</span>
+
+      <div class="video-card" data-url="contact.html">
+        <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=800" alt="Contact">
+        <div class="card-text">
+          <h3>Contact Us</h3>
+          <p>Get in Touch</p>
+        </div>
       </div>
     </div>
   </section>
@@ -360,7 +230,7 @@ body {
 <script>
   gsap.registerPlugin(ScrollTrigger);
 
-  // 1. Hero Zoom Logic
+  // 1. Hero Zoom Logic (Preserved from your code)
   const heroTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".hero",
@@ -371,33 +241,54 @@ body {
       anticipatePin: 1
     }
   });
-  heroTl.to(".hero video", { scale: 3, ease: "power1.inOut" }, 0);
-  heroTl.to(".hero-content", { scale: 2, opacity: 0, ease: "power1.inOut" }, 0);
+  heroTl.to(".hero video", { scale: 3, ease: "power1.inOut" }, 0); [cite: 42]
+  heroTl.to(".hero-content", { scale: 2, opacity: 0, ease: "power1.inOut" }, 0); [cite: 42]
 
-  // 2. Section 2 List Reveal
-  gsap.to(".problem-item", {
-    scrollTrigger: { trigger: ".section-2", start: "top 80%" },
-    opacity: 1, x: 0, duration: 0.8, stagger: 0.3
+  // 2. Card Stack Fan Animation
+  const cards = document.querySelectorAll('.video-card');
+
+  // Spread cards into a fan shape initially
+  gsap.set(cards, {
+    rotate: (i) => (i - 1.5) * 15, // Spreads them in an arc
+    x: (i) => (i - 1.5) * 50,
+    transformOrigin: "bottom center"
   });
 
-  // 3. Section 3 Hover Slider Logic
-  const items = document.querySelectorAll('.service-item');
-  const slider = document.getElementById('imageSlider');
+  // Reveal cards as user scrolls down
+  gsap.from(cards, {
+    scrollTrigger: {
+      trigger: ".section-cards",
+      start: "top 70%",
+    },
+    y: 400,
+    opacity: 0,
+    stagger: 0.1,
+    duration: 1.2,
+    ease: "expo.out"
+  });
 
-  items.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      // Manage classes
-      items.forEach(i => i.classList.remove('active'));
-      item.classList.add('active');
+  // 3. Click Interaction Logic
+  cards.forEach(card => {
+    // Focus Card on Click
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.classList.remove('is-focused'));
+      card.classList.add('is-focused');
+    });
+
+    // Zoom & Redirect on Double Click
+    card.addEventListener('dblclick', () => {
+      const url = card.getAttribute('data-url');
       
-      // Calculate slide movement
-      const index = item.getAttribute('data-index');
-      const slideHeight = document.querySelector('.preview-stage').offsetHeight;
-      
-      gsap.to(slider, {
-        y: -(index * slideHeight),
-        duration: 0.8,
-        ease: "power3.out"
+      const tl = gsap.timeline();
+      tl.to(card, {
+        scale: 5,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.in"
+      })
+      .to("body", { backgroundColor: "#000", duration: 0.3 }, "-=0.3")
+      .add(() => {
+        window.location.href = url;
       });
     });
   });
