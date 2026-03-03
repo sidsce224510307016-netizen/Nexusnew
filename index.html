@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RESTRO</title>
+<title>RESTRO - Cinematic Experience</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Premium Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- GSAP -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <style>
 :root {
@@ -28,19 +26,30 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--vanilla);
+  background: var(--velvet); /* Background matches hero for smooth transition */
   overflow-x: hidden;
+  color: var(--vanilla);
 }
 
-/* HERO */
+/* ================= CONTAINER ================= */
+#smooth-wrapper {
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* ================= HERO (The Zoom Layer) ================= */
 .hero {
   position: relative;
   height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: var(--vanilla);
   overflow: hidden;
 }
 
@@ -52,149 +61,152 @@ body {
   min-height: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
-  z-index: -2;
+  z-index: 1;
+  will-change: transform;
 }
 
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(63,13,18,0.75);
-  z-index: -1;
+  background: rgba(63, 13, 18, 0.6); /* Dark overlay */
+  z-index: 2;
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
+  will-change: transform, opacity;
 }
 
 .logo-title {
   font-family: 'Playfair Display', serif;
-  font-size: 5rem;
-  letter-spacing: 3px;
+  font-size: clamp(3rem, 10vw, 8rem);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 
 .hero p {
-  margin: 20px 0 40px;
-  color: var(--sandstone);
   font-size: 1.2rem;
+  color: var(--sandstone);
+  margin-bottom: 30px;
 }
 
+/* ================= BUTTONS ================= */
 .btn {
   padding: 14px 32px;
   border-radius: 40px;
   border: none;
+  font-size: 1rem;
   cursor: pointer;
   margin: 10px;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-.btn-primary {
-  background: var(--crimson);
-  color: var(--vanilla);
-}
+.btn-primary { background: var(--crimson); color: var(--vanilla); }
+.btn-secondary { background: transparent; border: 2px solid var(--sandstone); color: var(--sandstone); }
+.btn:hover { transform: scale(1.05); opacity: 0.9; }
 
-.btn-secondary {
-  background: transparent;
-  border: 2px solid var(--sandstone);
-  color: var(--sandstone);
-}
-
-/* SECTION 2 */
+/* ================= SECTION 2 (The Reveal) ================= */
 .section-2 {
+  position: relative;
   min-height: 100vh;
-  padding: 120px 10%;
+  padding: 100px 10%;
+  background: var(--vanilla);
   color: var(--velvet);
-  transform: scale(0.9);
-  opacity: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .section-2 h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   margin-bottom: 40px;
 }
 
 .problem-list {
-  font-size: 1.2rem;
-  line-height: 2;
+  font-size: 1.5rem;
+  line-height: 1.8;
+  max-width: 800px;
 }
 
-/* Fixed Logo Final Position */
-.fixed-logo {
-  position: fixed !important;
-  top: 30px;
-  left: 40px;
-  font-size: 1.8rem !important;
-  color: var(--velvet) !important;
-  z-index: 1000;
+.problem-item {
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateX(-30px);
 }
 </style>
 </head>
 
 <body>
 
-<section class="hero">
-  <video autoplay muted loop playsinline>
-    <source src="hero-video.mp4" type="video/mp4">
-  </video>
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="hero-video.mp4" type="video/mp4">
+    </video>
 
-  <div class="hero-content">
-    <h1 class="logo-title" id="logo">RESTRO</h1>
-    <p>Transform restaurant waiting chaos into structured revenue flow.</p>
+    <div class="hero-content">
+      <h1 class="logo-title">RESTRO</h1>
+      <p>Transform restaurant waiting chaos into revenue flow.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary">Book a Demo</button>
+        <button class="btn btn-secondary">Watch Video</button>
+      </div>
+    </div>
+  </section>
 
-    <button class="btn btn-primary">Book a Demo</button>
-    <button class="btn btn-secondary">Watch How It Works</button>
-  </div>
-</section>
-
-<section class="section-2" id="section2">
-  <h2>Why We Exist</h2>
-  <div class="problem-list">
-    • Walk-in customers leave due to no table availability<br>
-    • Restaurants lose revenue from unstructured queues<br>
-    • Kitchens get overwhelmed due to chaotic order bursts<br>
-    • Staff coordination breakdown
-  </div>
-</section>
+  <section class="section-2">
+    <h2>Why We Exist</h2>
+    <div class="problem-list">
+      <div class="problem-item">• Walk-in customers leave due to long wait times.</div>
+      <div class="problem-item">• Restaurants lose 15% revenue from manual queuing.</div>
+      <div class="problem-item">• Kitchens get overwhelmed by unmanaged crowds.</div>
+      <div class="problem-item">• Staff burnout from chaotic coordination.</div>
+    </div>
+  </section>
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-const logo = document.getElementById("logo");
-const heroContent = document.querySelector(".hero-content");
-const section2 = document.getElementById("section2");
+  // 1. THE TELESCOPE ZOOM
+  // We scale the video and content up as we scroll
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "+=150%", // How long the zoom lasts
+      scrub: 1,      // Smoothly follows the scroll
+      pin: true,     // Locks the hero in place
+      anticipatePin: 1
+    }
+  });
 
-// HERO TIMELINE
-gsap.timeline({
-  scrollTrigger: {
-    trigger: ".hero",
-    start: "top top",
-    end: "bottom top",
-    scrub: true
-  }
-})
-.to(logo, {
-  scale: 0.4,
-  x: -window.innerWidth / 2 + 120,
-  y: -window.innerHeight / 2 + 80,
-  ease: "power2.out"
-}, 0)
-.to(heroContent, {
-  opacity: 0.2,
-  ease: "power1.out"
-}, 0);
+  tl.to(".hero video", {
+    scale: 3,        // Zooms "into" the video
+    ease: "power1.inOut"
+  }, 0);
 
-// SECTION 2 REVEAL
-gsap.to(section2, {
-  scrollTrigger: {
-    trigger: section2,
-    start: "top 80%",
-  },
-  scale: 1,
-  opacity: 1,
-  duration: 1,
-  ease: "power3.out"
-});
+  tl.to(".hero-content", {
+    scale: 2,        // Zooms the text faster
+    opacity: 0,      // Fades out as it hits the "camera"
+    ease: "power1.inOut"
+  }, 0);
+
+  // 2. REVEAL THE LIST ITEMS ONE BY ONE
+  gsap.to(".problem-item", {
+    scrollTrigger: {
+      trigger: ".section-2",
+      start: "top 80%",
+    },
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    stagger: 0.3 // Delays each bullet point slightly
+  });
 </script>
 
 </body>
