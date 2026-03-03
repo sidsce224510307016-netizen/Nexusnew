@@ -147,29 +147,79 @@ body {
   min-height: 550px;
   width: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 .slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: filter 0.5s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.preview-info {
+/* The Secret Pop-up Content */
+.slide-overlay {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2); /* Darken slightly */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 40px;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  opacity: 0; /* Hidden initially */
+  transition: opacity 0.5s ease;
+  z-index: 2;
 }
 
-.preview-info p {
+.slide-overlay h3 {
+  font-family: 'Playfair Display', serif;
   color: #fff;
-  font-size: 1.1rem;
-  font-weight: 400;
+  font-size: 2rem;
+  margin-bottom: 15px;
+  transform: translateY(20px);
+  transition: transform 0.5s ease;
+}
+
+.slide-overlay p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
   line-height: 1.5;
-  max-width: 280px;
+  margin-bottom: 25px;
+  transform: translateY(30px);
+  transition: transform 0.5s ease 0.1s;
+}
+
+.slide-btn {
+  align-self: flex-start;
+  padding: 12px 25px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transform: translateY(40px);
+  transition: all 0.5s ease 0.2s;
+}
+
+/* Interaction: When cursor hovers over the image stage */
+.preview-stage:hover .slide img {
+  filter: blur(8px);
+  transform: scale(1.1);
+}
+
+.preview-stage:hover .slide-overlay {
+  opacity: 1;
+}
+
+.preview-stage:hover .slide-overlay h3,
+.preview-stage:hover .slide-overlay p,
+.preview-stage:hover .slide-btn {
+  transform: translateY(0);
 }
 
 .services-list {
@@ -254,19 +304,35 @@ body {
       <div class="image-slider" id="imageSlider">
         <div class="slide">
           <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Branding">
-          <div class="preview-info"><p>We create impactful brand identities that connect.</p></div>
+          <div class="slide-overlay">
+            <h3>Eternal Glow</h3>
+            <p>Unveil your natural radiance with our vitamin-rich serums designed to hydrate and illuminate.</p>
+            <button class="slide-btn">Shop the Glow &rarr;</button>
+          </div>
         </div>
         <div class="slide">
           <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Development">
-          <div class="preview-info"><p>We develop powerful platforms that grow with your needs.</p></div>
+          <div class="slide-overlay">
+            <h3>Modern Needs</h3>
+            <p>We develop powerful platforms that grow alongside your restaurant's evolving digital landscape.</p>
+            <button class="slide-btn">Learn More &rarr;</button>
+          </div>
         </div>
         <div class="slide">
           <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" alt="Websites">
-          <div class="preview-info"><p>We create seamless websites that perform.</p></div>
+          <div class="slide-overlay">
+            <h3>Digital Hub</h3>
+            <p>Crafting seamless websites that perform under pressure, just like your kitchen line.</p>
+            <button class="slide-btn">View Demos &rarr;</button>
+          </div>
         </div>
         <div class="slide">
           <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=800&q=80" alt="Direction">
-          <div class="preview-info"><p>We create visual narratives that resonate with your audience.</p></div>
+          <div class="slide-overlay">
+            <h3>Get in Touch</h3>
+            <p>Ready to transform your flow? Our team is standing by to help you manage the chaos.</p>
+            <button class="slide-btn">Contact Us &rarr;</button>
+          </div>
         </div>
       </div>
     </div>
@@ -333,12 +399,6 @@ body {
         duration: 0.8,
         ease: "power3.out"
       });
-
-      // Subtle image scale effect on hover
-      gsap.fromTo(slider.querySelectorAll('img')[index], 
-        { scale: 1.2 }, 
-        { scale: 1, duration: 1, ease: "power2.out" }
-      );
     });
   });
 </script>
