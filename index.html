@@ -26,84 +26,21 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--velvet); /* Background matches hero for smooth transition */
+  background: var(--velvet);
   overflow-x: hidden;
   color: var(--vanilla);
 }
 
-/* ================= CONTAINER ================= */
-#smooth-wrapper {
-  overflow: hidden;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
-
-/* ================= HERO (The Zoom Layer) ================= */
-.hero {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-}
-
-.hero video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  z-index: 1;
-  will-change: transform;
-}
-
-
-
-.hero-content {
-  position: relative;
-  z-index: 3;
-  will-change: transform, opacity;
-}
-
-.logo-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 10vw, 8rem);
-  letter-spacing: 8px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  color: var(--sandstone);
-  margin-bottom: 30px;
-}
-
-/* ================= BUTTONS ================= */
-.btn {
-  padding: 14px 32px;
-  border-radius: 40px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  margin: 10px;
-  font-weight: 600;
-  transition: 0.3s;
-}
-
+/* ================= HERO & SECTION 2 (Existing) ================= */
+.hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+.hero video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover; z-index: 1; }
+.hero-content { position: relative; z-index: 3; }
+.logo-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 10vw, 8rem); letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
+.hero p { font-size: 1.2rem; color: var(--sandstone); margin-bottom: 30px; }
+.btn { padding: 14px 32px; border-radius: 40px; border: none; font-size: 1rem; cursor: pointer; margin: 10px; font-weight: 600; transition: 0.3s; }
 .btn-primary { background: var(--crimson); color: var(--vanilla); }
 .btn-secondary { background: transparent; border: 2px solid var(--sandstone); color: var(--sandstone); }
-.btn:hover { transform: scale(1.05); opacity: 0.9; }
 
-/* ================= SECTION 2 (The Reveal) ================= */
 .section-2 {
   position: relative;
   min-height: 100vh;
@@ -116,22 +53,85 @@ body {
   justify-content: center;
 }
 
-.section-2 h2 {
+.section-2 h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 40px; }
+.problem-list { font-size: 1.5rem; line-height: 1.8; max-width: 800px; }
+.problem-item { margin-bottom: 20px; opacity: 0; transform: translateX(-30px); }
+
+/* ================= SECTION 3 (NEW: HOVER REVEAL) ================= */
+.section-hover {
+  min-height: 100vh;
+  display: flex;
+  background: var(--velvet);
+  padding: 100px 5%;
+  gap: 50px;
+}
+
+.services-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.service-item {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(213, 191, 134, 0.2);
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.service-item h3 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  margin-bottom: 40px;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--sandstone);
 }
 
-.problem-list {
-  font-size: 1.5rem;
-  line-height: 1.8;
-  max-width: 800px;
+/* Dim other items when one is hovered */
+.services-list:hover .service-item { opacity: 0.3; }
+.services-list .service-item:hover { opacity: 1; }
+
+.preview-stage {
+  flex: 1;
+  position: sticky;
+  top: 100px;
+  height: 60vh;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.2);
 }
 
-.problem-item {
-  margin-bottom: 20px;
+.preview-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  transform: translateX(-30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  transition: opacity 0.5s ease;
+}
+
+.preview-content.active { opacity: 1; }
+
+.preview-content img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.preview-info {
+  background: linear-gradient(transparent, rgba(63, 13, 18, 0.9));
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+}
+
+.preview-info p {
+  color: var(--vanilla);
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 </style>
 </head>
@@ -163,43 +163,93 @@ body {
     </div>
   </section>
 
+  <section class="section-hover">
+    <div class="services-list">
+      <div class="service-item" data-target="s1">
+        <h3>Waitlist Management</h3>
+      </div>
+      <div class="service-item" data-target="s2">
+        <h3>Smart Seating</h3>
+      </div>
+      <div class="service-item" data-target="s3">
+        <h3>Kitchen Workflow</h3>
+      </div>
+      <div class="service-item" data-target="s4">
+        <h3>Guest Insights</h3>
+      </div>
+    </div>
+
+    <div class="preview-stage">
+      <div class="preview-content active" id="s1">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Waitlist">
+        <div class="preview-info">
+          <p>Real-time digital queuing that notifies guests via SMS, reducing walk-aways by 30%.</p>
+        </div>
+      </div>
+      <div class="preview-content" id="s2">
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80" alt="Seating">
+        <div class="preview-info">
+          <p>AI-driven table assignments that optimize floor turnover and staff efficiency.</p>
+        </div>
+      </div>
+      <div class="preview-content" id="s3">
+        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Kitchen">
+        <div class="preview-info">
+          <p>Direct integration between front-of-house and kitchen to prevent order bottlenecks.</p>
+        </div>
+      </div>
+      <div class="preview-content" id="s4">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Insights">
+        <div class="preview-info">
+          <p>Detailed analytics on peak hours and customer preferences to drive repeat visits.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 <script>
   gsap.registerPlugin(ScrollTrigger);
 
-  // 1. THE TELESCOPE ZOOM
-  // We scale the video and content up as we scroll
+  // Existing Hero Scroll Logic
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: ".hero",
       start: "top top",
-      end: "+=150%", // How long the zoom lasts
-      scrub: 1,      // Smoothly follows the scroll
-      pin: true,     // Locks the hero in place
+      end: "+=150%",
+      scrub: 1,
+      pin: true,
       anticipatePin: 1
     }
   });
+  tl.to(".hero video", { scale: 3, ease: "power1.inOut" }, 0);
+  tl.to(".hero-content", { scale: 2, opacity: 0, ease: "power1.inOut" }, 0);
 
-  tl.to(".hero video", {
-    scale: 3,        // Zooms "into" the video
-    ease: "power1.inOut"
-  }, 0);
-
-  tl.to(".hero-content", {
-    scale: 2,        // Zooms the text faster
-    opacity: 0,      // Fades out as it hits the "camera"
-    ease: "power1.inOut"
-  }, 0);
-
-  // 2. REVEAL THE LIST ITEMS ONE BY ONE
+  // Existing Section 2 Reveal
   gsap.to(".problem-item", {
-    scrollTrigger: {
-      trigger: ".section-2",
-      start: "top 80%",
-    },
-    opacity: 1,
-    x: 0,
-    duration: 0.8,
-    stagger: 0.3 // Delays each bullet point slightly
+    scrollTrigger: { trigger: ".section-2", start: "top 80%" },
+    opacity: 1, x: 0, duration: 0.8, stagger: 0.3
+  });
+
+  // NEW: Hover Reveal Logic
+  const serviceItems = document.querySelectorAll('.service-item');
+  const previewContents = document.querySelectorAll('.preview-content');
+
+  serviceItems.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      const targetId = item.getAttribute('data-target');
+      
+      previewContents.forEach(content => {
+        content.classList.remove('active');
+        if(content.id === targetId) {
+          content.classList.add('active');
+          // Simple GSAP pop animation for the image
+          gsap.fromTo(content.querySelector('img'), 
+            { scale: 1.2, filter: "blur(10px)" }, 
+            { scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power2.out" }
+          );
+        }
+      });
+    });
   });
 </script>
 
