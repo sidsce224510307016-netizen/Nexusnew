@@ -1,309 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restro | Smart Walk-In Optimization</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <style>
-        /* Base styles integrated from your files */
-        *, *::after, *::before { box-sizing: border-box; } [cite: 108]
-        
-        :root {
-            --vanilla: #F1F0CC;
-            --merlot: #3F0D12;
-            --sandstone: #D5BF86;
-            --crimson: #A71D31;
-            font-size: 18px; [cite: 108]
-        }
+  <meta charset="UTF-8">
+  <title>Smart Queue System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            margin: 0;
-            background-color: var(--merlot);
-            color: var(--vanilla);
-            font-family: articulat-cf, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif; [cite: 110]
-            -webkit-font-smoothing: antialiased; [cite: 110]
-            -moz-osx-font-smoothing: grayscale; [cite: 114]
-            overflow-x: hidden;
-        }
+  <style>
+    /* ===============================
+       BRAND COLORS
+    =============================== */
+    :root {
+      --vanilla: #F1F0CC;
+      --velvet: #3F0D12;
+      --sandstone: #D5BF86;
+      --crimson: #A71D31;
+    }
 
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 1;
-        }
+    /* ===============================
+       RESET
+    =============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
 
-        .scroll-container {
-            position: relative;
-            z-index: 2;
-        }
+    body {
+      overflow-x: hidden;
+    }
 
-        section {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            pointer-events: none;
-        }
+    /* ===============================
+       HERO SECTION
+    =============================== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--vanilla);
+      overflow: hidden;
+    }
 
-        .content-card {
-            background: rgba(63, 13, 18, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--sandstone);
-            padding: 3rem;
-            border-radius: 4px;
-            max-width: 700px;
-            width: 100%;
-            pointer-events: all;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
+    /* Background Video */
+    .hero video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: -2;
+    }
 
-        .content-card.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* Dark Overlay */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(63, 13, 18, 0.75);
+      z-index: -1;
+    }
 
-        .oh { position: relative; overflow: hidden; } [cite: 111]
+    /* Content Container */
+    .hero-content {
+      max-width: 900px;
+      padding: 20px;
+    }
 
-        h1, h2 { 
-            color: var(--sandstone); 
-            text-transform: uppercase; 
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
 
-        .cta-primary {
-            background: var(--crimson);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 10px;
-            transition: filter 0.3s;
-        }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--sandstone);
+      margin-bottom: 40px;
+    }
 
-        .cta-secondary {
-            background: transparent;
-            color: var(--vanilla);
-            border: 1px solid var(--vanilla);
-            padding: 1rem 2rem;
-            cursor: pointer;
-        }
+    /* Buttons */
+    .btn {
+      padding: 14px 32px;
+      border-radius: 40px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin: 10px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    .btn-primary {
+      background: var(--crimson);
+      color: var(--vanilla);
+    }
 
-        th, td {
-            border-bottom: 1px solid var(--sandstone);
-            padding: 12px;
-            text-align: left;
-        }
+    .btn-primary:hover {
+      background: #8e1628;
+    }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--sandstone);
+      color: var(--sandstone);
+    }
 
-        @media screen and (min-width: 53em) {
-            .frame {
-                grid-template-columns: auto auto auto; [cite: 116]
-                grid-template-areas: 'title prev sponsor'; [cite: 113]
-            }
-        }
-    </style>
+    .btn-secondary:hover {
+      background: var(--sandstone);
+      color: var(--velvet);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <div id="canvas-container"></div>
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="hero-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
-    <div class="scroll-container">
-        <section id="s1">
-            <div class="content-card">
-                <div class="oh"><h1>Instantly Clarify Your Table Flow</h1></div> [cite: 5, 8]
-                <p>Stop losing revenue to unstructured queues and staff friction.</p> [cite: 9]
-                <button class="cta-primary">Book a Demo</button> [cite: 10]
-                <button class="cta-secondary">Watch How It Works</button> [cite: 11]
-            </div>
-        </section>
+    <div class="hero-content">
+      <h1>Stop Losing Walk-In Revenue.</h1>
+      <p>Transform restaurant waiting chaos into structured, revenue-generating flow.</p>
 
-        <section id="s2">
-            <div class="content-card">
-                <h2>The Problem [cite: 15]</h2>
-                <ul>
-                    <li>Walk-in customers leave due to no table availability [cite: 18]</li>
-                    <li>Restaurants lose revenue from unstructured queues [cite: 19]</li>
-                    <li>Kitchens get overwhelmed due to chaotic order bursts [cite: 20]</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="s3">
-            <div class="content-card">
-                <h2>The Evolution [cite: 25]</h2>
-                <p>We are NOT a reservation system. We optimize walk-in overflow. [cite: 28, 29]</p>
-                <p>Transition from manual chaos to a smart, coordinated kitchen flow. [cite: 32, 33]</p>
-            </div>
-        </section>
-
-        <section id="s4">
-            <div class="content-card">
-                <h2>Simple 4-Step Flow [cite: 34]</h2>
-                <p>1. Customer scans QR [cite: 37]</p>
-                <p>2. Browses live digital menu [cite: 38]</p>
-                <p>3. Places order while waiting [cite: 39]</p>
-                <p>4. Kitchen gets scheduled queue [cite: 40]</p>
-            </div>
-        </section>
-
-        <section id="s5">
-            <div class="content-card">
-                <h2>The 3 Pillars [cite: 42]</h2>
-                <div class="grid-3">
-                    <div><strong>Restaurants:</strong> Revenue & Workflow [cite: 45, 46, 47]</div>
-                    <div><strong>Customers:</strong> Transparent Timing [cite: 49, 51]</div>
-                    <div><strong>Operations:</strong> Fatigue Management [cite: 53, 55]</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="s6">
-            <div class="content-card">
-                <h2>Interface Preview [cite: 58]</h2>
-                <p>Order scheduling dashboards and kitchen time panels designed for high-volume environments. [cite: 63, 64]</p>
-            </div>
-        </section>
-
-        <section id="s7">
-            <div class="content-card">
-                <h2>Pilot Partner Feedback [cite: 74]</h2>
-                <p>"The smart scheduling changed our kitchen's sanity on weekends." [cite: 69]</p>
-            </div>
-        </section>
-
-        <section id="s8">
-            <div class="content-card">
-                <h2>Competitive Positioning [cite: 76]</h2>
-                <table>
-                    <tr><th>Feature</th><th>Traditional</th><th>Restro</th></tr>
-                    <tr><td>Logic</td><td>Manual Chaos</td><td>Walk-in Opt.</td></tr>
-                    <tr><td>Kitchen</td><td>No Fatigue Control</td><td>Smart Sched.</td></tr>
-                    <tr><td>Outcome</td><td>Lost Customers</td><td>Revenue Retention</td></tr>
-                </table> [cite: 78]
-            </div>
-        </section>
-
-        <section id="s9">
-            <div class="content-card">
-                <h2>Scalability [cite: 80]</h2>
-                <p>SaaS model. No hardware investment. Easy integration for multi-location chains. [cite: 83, 85, 86]</p>
-            </div>
-        </section>
-
-        <section id="s10">
-            <div class="content-card" style="text-align: center;">
-                <h2>Stop Losing Walk-In Revenue [cite: 96]</h2>
-                <button class="cta-primary" style="font-size: 1.5rem; padding: 1.5rem 3rem;">Join the Movement</button> [cite: 88, 92]
-            </div>
-        </section>
+      <button class="btn btn-primary">Book a Demo</button>
+      <button class="btn btn-secondary">Watch How It Works</button>
     </div>
+  </section>
 
-    <script>
-        // --- THREE.JS 3D SCENE ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        // Create 3D background elements (Floating abstract Geometry)
-        const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
-        const material = new THREE.MeshPhongMaterial({ color: 0xA71D31, wireframe: true });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        // Add particles for depth
-        const partGeo = new THREE.BufferGeometry();
-        const partCount = 500;
-        const posArray = new Float32Array(partCount * 3);
-        for(let i=0; i < partCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 20; }
-        partGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const partMat = new THREE.PointsMaterial({ size: 0.02, color: 0xD5BF86 });
-        const particles = new THREE.Points(partGeo, partMat);
-        scene.add(particles);
-
-        const light = new THREE.PointLight(0xF1F0CC, 1);
-        light.position.set(5, 5, 5);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x3F0D12, 0.5));
-
-        camera.position.z = 5;
-
-        // --- GSAP ANIMATION ---
-        gsap.registerPlugin(ScrollTrigger);
-
-        // 3D Rotation on scroll
-        gsap.to(mesh.rotation, {
-            y: Math.PI * 4,
-            z: Math.PI * 2,
-            scrollTrigger: {
-                trigger: ".scroll-container",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 2
-            }
-        });
-
-        // Background movement
-        gsap.to(camera.position, {
-            z: 8,
-            scrollTrigger: {
-                trigger: ".scroll-container",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1
-            }
-        });
-
-        // Content reveal logic
-        const cards = document.querySelectorAll('.content-card');
-        cards.forEach((card, i) => {
-            ScrollTrigger.create({
-                trigger: `#s${i+1}`,
-                start: "top center",
-                onEnter: () => card.classList.add('active'),
-                onLeaveBack: () => card.classList.remove('active')
-            });
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.001;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle Resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
 </body>
 </html>
