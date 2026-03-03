@@ -1,141 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Smart Queue System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>RESTRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    /* ===============================
-       BRAND COLORS
-    =============================== */
-    :root {
-      --vanilla: #F1F0CC;
-      --velvet: #3F0D12;
-      --sandstone: #D5BF86;
-      --crimson: #A71D31;
-    }
+<style>
+:root {
+  --vanilla: #F1F0CC;
+  --velvet: #3F0D12;
+  --sandstone: #D5BF86;
+  --crimson: #A71D31;
+}
 
-    /* ===============================
-       RESET
-    =============================== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
 
-    body {
-      overflow-x: hidden;
-    }
+body {
+  overflow-x: hidden;
+  background: var(--vanilla);
+}
 
-    /* ===============================
-       HERO SECTION
-    =============================== */
-    .hero {
-      position: relative;
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--vanilla);
-      overflow: hidden;
-    }
+/* ================= HERO ================= */
 
-    /* Background Video */
-    .hero video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      z-index: -2;
-    }
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--vanilla);
+  overflow: hidden;
+}
 
-   
-    /* Content Container */
-    .hero-content {
-      max-width: 900px;
-      padding: 20px;
-    }
+.hero video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -2;
+}
 
-    .hero h1 {
-      font-size: 3.2rem;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
+/* Dark overlay */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(63, 13, 18, 0.75);
+  z-index: -1;
+}
 
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--sandstone);
-      margin-bottom: 40px;
-    }
+/* RESTRO Title */
+.logo-title {
+  font-size: 4rem;
+  font-weight: 700;
+  transition: all 0.6s ease;
+}
 
-    /* Buttons */
-    .btn {
-      padding: 14px 32px;
-      border-radius: 40px;
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s ease;
-      margin: 10px;
-    }
+.hero p {
+  font-size: 1.2rem;
+  color: var(--sandstone);
+  margin: 20px 0 40px;
+}
 
-    .btn-primary {
-      background: var(--crimson);
-      color: var(--vanilla);
-    }
+/* Buttons */
+.btn {
+  padding: 14px 32px;
+  border-radius: 40px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 10px;
+}
 
-    .btn-primary:hover {
-      background: #8e1628;
-    }
+.btn-primary {
+  background: var(--crimson);
+  color: var(--vanilla);
+}
 
-    .btn-secondary {
-      background: transparent;
-      border: 2px solid var(--sandstone);
-      color: var(--sandstone);
-    }
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--sandstone);
+  color: var(--sandstone);
+}
 
-    .btn-secondary:hover {
-      background: var(--sandstone);
-      color: var(--velvet);
-    }
+/* ================= SCROLL EFFECT ================= */
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
+/* When activated */
+.logo-scrolled {
+  position: fixed;
+  top: 20px;
+  left: 40px;
+  font-size: 1.8rem;
+  color: var(--velvet);
+  z-index: 1000;
+}
 
-      .hero p {
-        font-size: 1rem;
-      }
-    }
-  </style>
+/* ================= SECTION 2 ================= */
+
+.section-2 {
+  min-height: 100vh;
+  padding: 120px 10%;
+  background: var(--vanilla);
+  color: var(--velvet);
+}
+
+.section-2 h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.problem-list {
+  line-height: 2;
+  font-size: 1.2rem;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .logo-title {
+    font-size: 2.5rem;
+  }
+
+  .logo-scrolled {
+    left: 20px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <section class="hero">
-    <video autoplay muted loop playsinline>
-      <source src="hero-video.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="hero-video.mp4" type="video/mp4">
+  </video>
 
-    <div class="hero-content">
-      <h1>RESTRO.</h1>
-      <p>Transform restaurant waiting chaos into structured, revenue-generating flow.</p>
+  <div>
+    <h1 class="logo-title" id="logo">RESTRO</h1>
+    <p>Transform restaurant waiting chaos into structured, revenue-generating flow.</p>
 
-      <button class="btn btn-primary">Book a Demo</button>
-      <button class="btn btn-secondary">Watch How It Works</button>
-    </div>
-  </section>
+    <button class="btn btn-primary">Book a Demo</button>
+    <button class="btn btn-secondary">Watch How It Works</button>
+  </div>
+</section>
+
+<section class="section-2">
+  <h2>Why We Exist</h2>
+  <div class="problem-list">
+    • Walk-in customers leave due to no table availability<br>
+    • Restaurants lose revenue from unstructured queues<br>
+    • Kitchens get overwhelmed due to chaotic order bursts<br>
+    • Staff coordination breakdown
+  </div>
+</section>
+
+<script>
+const logo = document.getElementById("logo");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 100) {
+    logo.classList.add("logo-scrolled");
+  } else {
+    logo.classList.remove("logo-scrolled");
+  }
+});
+</script>
 
 </body>
 </html>
