@@ -8,6 +8,10 @@
 <!-- Premium Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+<!-- GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <style>
 :root {
   --vanilla: #F1F0CC;
@@ -28,8 +32,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ================= HERO ================= */
-
+/* HERO */
 .hero {
   position: relative;
   height: 100vh;
@@ -56,30 +59,31 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(63, 13, 18, 0.75);
+  background: rgba(63,13,18,0.75);
   z-index: -1;
 }
 
-/* RESTRO */
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
 .logo-title {
   font-family: 'Playfair Display', serif;
-  font-size: 4.5rem;
-  letter-spacing: 2px;
-  transition: transform 0.2s linear, font-size 0.2s linear;
-  position: relative;
+  font-size: 5rem;
+  letter-spacing: 3px;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  color: var(--sandstone);
   margin: 20px 0 40px;
+  color: var(--sandstone);
+  font-size: 1.2rem;
 }
 
 .btn {
   padding: 14px 32px;
   border-radius: 40px;
   border: none;
-  font-size: 1rem;
   cursor: pointer;
   margin: 10px;
 }
@@ -95,31 +99,34 @@ body {
   color: var(--sandstone);
 }
 
-/* ================= SECTION 2 ================= */
-
+/* SECTION 2 */
 .section-2 {
   min-height: 100vh;
   padding: 120px 10%;
   color: var(--velvet);
-  opacity: 0;
   transform: scale(0.9);
-  transition: all 0.8s ease;
-}
-
-.section-2.visible {
-  opacity: 1;
-  transform: scale(1);
+  opacity: 0;
 }
 
 .section-2 h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
+  font-size: 3rem;
   margin-bottom: 40px;
 }
 
 .problem-list {
   font-size: 1.2rem;
   line-height: 2;
+}
+
+/* Fixed Logo Final Position */
+.fixed-logo {
+  position: fixed !important;
+  top: 30px;
+  left: 40px;
+  font-size: 1.8rem !important;
+  color: var(--velvet) !important;
+  z-index: 1000;
 }
 </style>
 </head>
@@ -131,9 +138,9 @@ body {
     <source src="hero-video.mp4" type="video/mp4">
   </video>
 
-  <div>
+  <div class="hero-content">
     <h1 class="logo-title" id="logo">RESTRO</h1>
-    <p>Transform restaurant waiting chaos into structured, revenue-generating flow.</p>
+    <p>Transform restaurant waiting chaos into structured revenue flow.</p>
 
     <button class="btn btn-primary">Book a Demo</button>
     <button class="btn btn-secondary">Watch How It Works</button>
@@ -151,26 +158,42 @@ body {
 </section>
 
 <script>
+gsap.registerPlugin(ScrollTrigger);
+
 const logo = document.getElementById("logo");
+const heroContent = document.querySelector(".hero-content");
 const section2 = document.getElementById("section2");
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
-  const maxScroll = 300;
-
-  let progress = Math.min(scrollY / maxScroll, 1);
-
-  // Smooth live transition
-  const scale = 1 - (0.6 * progress);
-  const moveX = - (window.innerWidth / 2 - 120) * progress;
-  const moveY = - (window.innerHeight / 2 - 40) * progress;
-
-  logo.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
-
-  // Zoom reveal for section 2
-  if (scrollY > window.innerHeight * 0.6) {
-    section2.classList.add("visible");
+// HERO TIMELINE
+gsap.timeline({
+  scrollTrigger: {
+    trigger: ".hero",
+    start: "top top",
+    end: "bottom top",
+    scrub: true
   }
+})
+.to(logo, {
+  scale: 0.4,
+  x: -window.innerWidth / 2 + 120,
+  y: -window.innerHeight / 2 + 80,
+  ease: "power2.out"
+}, 0)
+.to(heroContent, {
+  opacity: 0.2,
+  ease: "power1.out"
+}, 0);
+
+// SECTION 2 REVEAL
+gsap.to(section2, {
+  scrollTrigger: {
+    trigger: section2,
+    start: "top 80%",
+  },
+  scale: 1,
+  opacity: 1,
+  duration: 1,
+  ease: "power3.out"
 });
 </script>
 
