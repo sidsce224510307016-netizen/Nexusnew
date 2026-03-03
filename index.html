@@ -5,6 +5,9 @@
 <title>RESTRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Premium Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root {
   --vanilla: #F1F0CC;
@@ -17,12 +20,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
   background: var(--vanilla);
+  overflow-x: hidden;
 }
 
 /* ================= HERO ================= */
@@ -49,7 +52,6 @@ body {
   z-index: -2;
 }
 
-/* Dark overlay */
 .hero::after {
   content: "";
   position: absolute;
@@ -58,11 +60,13 @@ body {
   z-index: -1;
 }
 
-/* RESTRO Title */
+/* RESTRO */
 .logo-title {
-  font-size: 4rem;
-  font-weight: 700;
-  transition: all 0.6s ease;
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  letter-spacing: 2px;
+  transition: transform 0.2s linear, font-size 0.2s linear;
+  position: relative;
 }
 
 .hero p {
@@ -71,7 +75,6 @@ body {
   margin: 20px 0 40px;
 }
 
-/* Buttons */
 .btn {
   padding: 14px 32px;
   border-radius: 40px;
@@ -92,46 +95,31 @@ body {
   color: var(--sandstone);
 }
 
-/* ================= SCROLL EFFECT ================= */
-
-/* When activated */
-.logo-scrolled {
-  position: fixed;
-  top: 20px;
-  left: 40px;
-  font-size: 1.8rem;
-  color: var(--velvet);
-  z-index: 1000;
-}
-
 /* ================= SECTION 2 ================= */
 
 .section-2 {
   min-height: 100vh;
   padding: 120px 10%;
-  background: var(--vanilla);
   color: var(--velvet);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.8s ease;
+}
+
+.section-2.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .section-2 h2 {
-  font-size: 2.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
   margin-bottom: 40px;
 }
 
 .problem-list {
-  line-height: 2;
   font-size: 1.2rem;
-}
-
-/* Responsive */
-@media(max-width:768px){
-  .logo-title {
-    font-size: 2.5rem;
-  }
-
-  .logo-scrolled {
-    left: 20px;
-  }
+  line-height: 2;
 }
 </style>
 </head>
@@ -152,7 +140,7 @@ body {
   </div>
 </section>
 
-<section class="section-2">
+<section class="section-2" id="section2">
   <h2>Why We Exist</h2>
   <div class="problem-list">
     • Walk-in customers leave due to no table availability<br>
@@ -164,12 +152,24 @@ body {
 
 <script>
 const logo = document.getElementById("logo");
+const section2 = document.getElementById("section2");
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 100) {
-    logo.classList.add("logo-scrolled");
-  } else {
-    logo.classList.remove("logo-scrolled");
+  const scrollY = window.scrollY;
+  const maxScroll = 300;
+
+  let progress = Math.min(scrollY / maxScroll, 1);
+
+  // Smooth live transition
+  const scale = 1 - (0.6 * progress);
+  const moveX = - (window.innerWidth / 2 - 120) * progress;
+  const moveY = - (window.innerHeight / 2 - 40) * progress;
+
+  logo.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+
+  // Zoom reveal for section 2
+  if (scrollY > window.innerHeight * 0.6) {
+    section2.classList.add("visible");
   }
 });
 </script>
