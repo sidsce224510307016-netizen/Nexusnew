@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +11,15 @@
 
 <style>
 
+:root{
+--dark-coffee:#3d1f15ff;
+--palm-leaf:#8aa040ff;
+--powder-petal:#f7dfcbff;
+--cinnabar:#ef3e2eff;
+--pumpkin-spice:#ff711fff;
+--sunflower-gold:#fbb337ff;
+}
+
 *{
 margin:0;
 padding:0;
@@ -20,8 +28,8 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:#0f0f0f;
-color:white;
+background:var(--dark-coffee);
+color:var(--powder-petal);
 overflow-x:hidden;
 }
 
@@ -53,21 +61,31 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-1;
+filter:brightness(0.45);
 }
 
 .hero h1{
-font-size:3.2rem;
+font-size:3.3rem;
 max-width:900px;
 line-height:1.3;
+color:var(--powder-petal);
 }
 
 .hero p{
 margin-top:20px;
 font-size:1.2rem;
-opacity:0.9;
+color:var(--sunflower-gold);
 }
 
-/* why we exist */
+/* headings */
+
+h2{
+font-size:2.6rem;
+margin-bottom:25px;
+color:var(--sunflower-gold);
+}
+
+/* cards */
 
 .why-grid{
 display:flex;
@@ -76,22 +94,24 @@ margin-top:50px;
 }
 
 .card{
-background:#1b1b1b;
+background:var(--powder-petal);
+color:var(--dark-coffee);
 padding:30px;
-border-radius:10px;
+border-radius:12px;
 flex:1;
 transition:0.4s;
 }
 
 .card:hover{
-transform:translateY(-10px);
+transform:translateY(-10px) scale(1.02);
 }
 
 /* problem */
 
 .problem{
 text-align:center;
-font-size:1.3rem;
+font-size:1.4rem;
+color:var(--powder-petal);
 }
 
 /* how it works */
@@ -104,9 +124,10 @@ margin-top:50px;
 }
 
 .step{
-background:#1b1b1b;
+background:var(--powder-petal);
+color:var(--dark-coffee);
 padding:30px;
-border-radius:10px;
+border-radius:12px;
 }
 
 /* why choose */
@@ -118,17 +139,19 @@ margin-top:50px;
 }
 
 .feature{
-background:#1b1b1b;
+background:var(--palm-leaf);
+color:white;
 padding:25px;
-border-radius:10px;
+border-radius:12px;
 flex:1;
+font-weight:600;
 }
 
 /* scalability */
 
 .scale p{
 margin-top:20px;
-font-size:1.2rem;
+font-size:1.3rem;
 }
 
 /* contact */
@@ -138,35 +161,37 @@ margin-top:30px;
 display:flex;
 flex-direction:column;
 gap:15px;
-max-width:400px;
+max-width:420px;
 }
 
 input{
 padding:12px;
 border-radius:6px;
 border:none;
+background:var(--powder-petal);
 }
 
 button{
-padding:12px;
-background:#ff4b2b;
+padding:13px;
+background:var(--cinnabar);
 border:none;
 border-radius:6px;
 color:white;
-cursor:pointer;
 font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:var(--pumpkin-spice);
 }
 
 .success{
 display:none;
 margin-top:20px;
-color:#00ff9d;
+color:var(--sunflower-gold);
 font-weight:bold;
-}
-
-h2{
-font-size:2.5rem;
-margin-bottom:20px;
+font-size:1.2rem;
 }
 
 </style>
@@ -185,7 +210,10 @@ margin-bottom:20px;
 
 <div>
 
-<h1>Peak hours should be your most profitable,<br>not most chaotic.</h1>
+<h1>
+Peak hours should be your most profitable,<br>
+not most chaotic.
+</h1>
 
 <p>Introducing Rastro — Smart Restaurant Flow System</p>
 
@@ -273,12 +301,9 @@ overwhelmed staff, and frustrated customers.
 
 <div class="features">
 
-<div class="feature">Faster service during peak hours</div>
-
+<div class="feature">Faster peak-hour service</div>
 <div class="feature">Higher restaurant revenue</div>
-
-<div class="feature">Better customer experience</div>
-
+<div class="feature">Real-time menu availability</div>
 <div class="feature">Reduced staff pressure</div>
 
 </div>
@@ -292,10 +317,8 @@ overwhelmed staff, and frustrated customers.
 <h2>Scalability</h2>
 
 <p>
-
 From single restaurants to multi-location chains,
 Rastro scales seamlessly with your business.
-
 </p>
 
 </section>
@@ -332,7 +355,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 gsap.from(".hero h1",{
 opacity:0,
-y:80,
+y:100,
 duration:1.5
 })
 
@@ -353,7 +376,6 @@ start:"top 80%"
 document.getElementById("form").addEventListener("submit",function(e){
 
 e.preventDefault()
-
 document.querySelector(".success").style.display="block"
 
 })
@@ -361,5 +383,4 @@ document.querySelector(".success").style.display="block"
 </script>
 
 </body>
-
 </html>
