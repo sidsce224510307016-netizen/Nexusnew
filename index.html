@@ -33,8 +33,6 @@ color:var(--powder-petal);
 overflow-x:hidden;
 }
 
-/* sections */
-
 section{
 min-height:100vh;
 padding:100px 10%;
@@ -43,7 +41,7 @@ flex-direction:column;
 justify-content:center;
 }
 
-/* hero */
+/* HERO */
 
 .hero{
 position:relative;
@@ -55,17 +53,18 @@ justify-content:center;
 text-align:center;
 }
 
-.hero video{
+.hero-video{
 position:absolute;
 width:100%;
 height:100%;
 object-fit:cover;
 z-index:-1;
+transform:scale(1);
 filter:brightness(0.45);
 }
 
 .hero h1{
-font-size:3.3rem;
+font-size:3.4rem;
 max-width:900px;
 line-height:1.3;
 color:var(--powder-petal);
@@ -77,15 +76,13 @@ font-size:1.2rem;
 color:var(--sunflower-gold);
 }
 
-/* headings */
-
 h2{
 font-size:2.6rem;
 margin-bottom:25px;
 color:var(--sunflower-gold);
 }
 
-/* cards */
+/* CARDS */
 
 .why-grid{
 display:flex;
@@ -103,18 +100,17 @@ transition:0.4s;
 }
 
 .card:hover{
-transform:translateY(-10px) scale(1.02);
+transform:translateY(-10px);
 }
 
-/* problem */
+/* PROBLEM */
 
 .problem{
 text-align:center;
 font-size:1.4rem;
-color:var(--powder-petal);
 }
 
-/* how it works */
+/* STEPS */
 
 .steps{
 display:grid;
@@ -130,7 +126,7 @@ padding:30px;
 border-radius:12px;
 }
 
-/* why choose */
+/* FEATURES */
 
 .features{
 display:flex;
@@ -140,21 +136,14 @@ margin-top:50px;
 
 .feature{
 background:var(--palm-leaf);
-color:white;
 padding:25px;
 border-radius:12px;
 flex:1;
+color:white;
 font-weight:600;
 }
 
-/* scalability */
-
-.scale p{
-margin-top:20px;
-font-size:1.3rem;
-}
-
-/* contact */
+/* CONTACT */
 
 .contact form{
 margin-top:30px;
@@ -204,11 +193,11 @@ font-size:1.2rem;
 
 <section class="hero">
 
-<video autoplay muted loop>
+<video class="hero-video" autoplay muted loop playsinline>
 <source src="restaurant.mp4" type="video/mp4">
 </video>
 
-<div>
+<div class="hero-content">
 
 <h1>
 Peak hours should be your most profitable,<br>
@@ -286,7 +275,7 @@ overwhelmed staff, and frustrated customers.
 
 <div class="step">
 <h3>Arrival</h3>
-<p>Your food starts preparing as you pay and arrives when seated.</p>
+<p>Your food begins preparation as you pay and arrives once seated.</p>
 </div>
 
 </div>
@@ -303,7 +292,7 @@ overwhelmed staff, and frustrated customers.
 
 <div class="feature">Faster peak-hour service</div>
 <div class="feature">Higher restaurant revenue</div>
-<div class="feature">Real-time menu availability</div>
+<div class="feature">Real-time menu updates</div>
 <div class="feature">Reduced staff pressure</div>
 
 </div>
@@ -312,13 +301,13 @@ overwhelmed staff, and frustrated customers.
 
 <!-- SCALABILITY -->
 
-<section class="scale">
+<section>
 
 <h2>Scalability</h2>
 
 <p>
-From single restaurants to multi-location chains,
-Rastro scales seamlessly with your business.
+From single restaurants to large multi-location chains,
+Rastro scales effortlessly with your business.
 </p>
 
 </section>
@@ -332,13 +321,9 @@ Rastro scales seamlessly with your business.
 <form id="form">
 
 <input type="text" placeholder="Your Name" required>
-
 <input type="email" placeholder="Email Address" required>
-
 <input type="tel" placeholder="Phone Number" required>
-
 <input type="text" placeholder="Restaurant Name" required>
-
 <input type="number" placeholder="Number of Locations">
 
 <button type="submit">Submit</button>
@@ -353,11 +338,20 @@ Rastro scales seamlessly with your business.
 
 gsap.registerPlugin(ScrollTrigger)
 
-gsap.from(".hero h1",{
-opacity:0,
-y:100,
-duration:1.5
+/* HERO ZOOM EFFECT */
+
+gsap.to(".hero-video",{
+scale:1.35,
+scrollTrigger:{
+trigger:".hero",
+start:"top top",
+end:"bottom top",
+scrub:true,
+pin:true
+}
 })
+
+/* SECTION FADE */
 
 gsap.utils.toArray("section").forEach(section=>{
 
@@ -372,6 +366,8 @@ start:"top 80%"
 })
 
 })
+
+/* FORM */
 
 document.getElementById("form").addEventListener("submit",function(e){
 
