@@ -1078,10 +1078,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Fixed header — height:300px matches reference; mix-blend-mode:exclusion for blending effect */
+  /* Marquee header — sticky inside slide-why, stays in its lane */
   .why-header-fixed {
-    position: fixed;
-    top: 0; left: 0;
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 300px;
     z-index: 100;
@@ -1090,10 +1090,8 @@
     pointer-events: none;
     overflow: hidden;
     mix-blend-mode: exclusion;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    /* no opacity/visibility toggle needed — sticky handles show/hide naturally */
   }
-  .why-header-fixed.visible { opacity: 1; }
 
   /* marquee inner — GPU-accelerated */
   .why-marquee-inner {
@@ -1115,10 +1113,11 @@
     user-select: none;
   }
 
-  /* Sub-label — below header, top:280px matches reference */
+  /* Sub-label — sticky below the marquee header */
   .why-sub-header {
-    position: fixed;
-    top: 280px; left: 5vw;
+    position: sticky;
+    top: 300px;
+    left: 5vw;
     font-family: 'Jost', sans-serif;
     font-size: 0.8rem;
     letter-spacing: 3px;
@@ -1126,16 +1125,14 @@
     z-index: 101;
     color: var(--creme-brulee);
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    margin-top: -40px;
+    margin-left: 5vw;
   }
-  .why-sub-header.visible { opacity: 1; }
 
-  /* Content: padding-top:50vh pushes below the fixed header */
+  /* Content rows — no extra padding; sticky header occupies its own flow space */
   .why-content-wrap {
     position: relative;
     z-index: 1;
-    padding-top: 50vh;
   }
 
   /* Project row — justify-content:space-between, min-height:100vh */
@@ -1417,7 +1414,7 @@
 <!-- ══ SLIDE 1B: WHY WE EXIST — Insomnia Ultra Smooth ══ -->
 <section id="slide-why">
 
-  <!-- Fixed massive marquee: 3 copies, mix-blend-mode:exclusion -->
+  <!-- Sticky marquee — lives inside section, stays in its lane -->
   <div class="why-header-fixed" id="why-header-fixed">
     <div class="why-marquee-inner" id="why-marquee-inner">
       <h1>WHY WE EXIST * RESTRO * </h1>
@@ -1426,7 +1423,7 @@
     </div>
   </div>
 
-  <!-- Fixed sub-label -->
+  <!-- Sticky sub-label -->
   <div class="why-sub-header" id="why-sub-header">RESTRO — 2026</div>
 
   <!-- Content rows -->
@@ -2210,15 +2207,15 @@
     gsap.ticker.lagSmoothing(0);
     lenis.on('scroll', ScrollTrigger.update);
 
-    /* ── 2. Show / hide fixed elements when section enters view ── */
+    /* ── 2. Show dot nav when section enters view (header/sub handled by sticky) ── */
     ScrollTrigger.create({
       trigger: whySection,
       start: 'top 60%',
       end: 'bottom 40%',
-      onEnter:     () => { headerFixed.classList.add('visible'); subHeader.classList.add('visible'); dotNav.classList.add('visible'); },
-      onLeave:     () => { headerFixed.classList.remove('visible'); subHeader.classList.remove('visible'); dotNav.classList.remove('visible'); },
-      onEnterBack: () => { headerFixed.classList.add('visible'); subHeader.classList.add('visible'); dotNav.classList.add('visible'); },
-      onLeaveBack: () => { headerFixed.classList.remove('visible'); subHeader.classList.remove('visible'); dotNav.classList.remove('visible'); },
+      onEnter:     () => { dotNav.classList.add('visible'); },
+      onLeave:     () => { dotNav.classList.remove('visible'); },
+      onEnterBack: () => { dotNav.classList.add('visible'); },
+      onLeaveBack: () => { dotNav.classList.remove('visible'); },
     });
 
     /* ── 3. Marquee — xPercent:-50, scrub:0.5, tied to full page scroll ──
@@ -2227,7 +2224,7 @@
       xPercent: -50,
       ease: 'none',
       scrollTrigger: {
-        trigger: 'body',
+        trigger: whySection,
         start: 'top top',
         end: 'bottom bottom',
         scrub: 0.5,
