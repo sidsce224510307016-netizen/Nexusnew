@@ -535,209 +535,18 @@
   }
   .arrow-btn.filled { background: var(--navy); color: #DCD7C9; border-color: var(--navy); }
 
-  /* ── SLIDE 4: HOW IT WORKS — HORIZONTAL DRAG SLIDER (WebGL) ── */
+  /* ── SLIDE 4: HOW IT WORKS — GSAP DRAG SLIDER ── */
   #slide4 {
-    background: #111;
+    background: #0e0b09;
     overflow: hidden;
     height: 100svh;
     min-height: 100svh;
     position: relative;
     cursor: grab;
     user-select: none;
+    display: block;
   }
   #slide4:active { cursor: grabbing; }
-
-  /* WebGL canvas sits behind everything */
-  .hiw-dom-gl {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Slider wrapper */
-  .hiw-slider {
-    position: relative;
-    padding: 0 15vw;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    user-select: none;
-    z-index: 2;
-  }
-  .hiw-slider__inner {
-    display: flex;
-    position: relative;
-  }
-
-  /* Each slide card */
-  .hiw-slide {
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .hiw-slide:first-child { position: relative; }
-  .hiw-slide:not(:first-child) {
-    position: absolute;
-    top: 0; height: 100%;
-  }
-  .hiw-slide__inner {
-    position: relative;
-    overflow: hidden;
-    width: 55vw;
-    padding-top: 56.5%;
-  }
-  .hiw-slide img {
-    display: none;
-  }
-
-  /* Titles centred overlay */
-  .hiw-titles {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 3;
-    text-align: center;
-    width: 70vw;
-  }
-  .hiw-titles__list {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-  }
-  .hiw-title-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-  }
-  .hiw-title-item--proxy {
-    visibility: hidden;
-  }
-  .hiw-title-step {
-    font-family: 'Jost', sans-serif;
-    font-size: clamp(9px, 2vw, 11px);
-    letter-spacing: 5px;
-    color: var(--creme-brulee);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .hiw-title-step::before,
-  .hiw-title-step::after {
-    content: '';
-    display: inline-block;
-    width: 24px; height: 1px;
-    background: var(--creme-brulee);
-    opacity: 0.5;
-  }
-  .hiw-title-main {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 6vw, 52px);
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    color: #fff;
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-  .hiw-title-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(13px, 3vw, 17px);
-    color: rgba(220,215,201,0.65);
-    line-height: 1.6;
-    font-weight: 300;
-    max-width: 380px;
-  }
-
-  /* Progress bar at bottom */
-  .hiw-progress {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 3px;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 10;
-  }
-  .hiw-progress__line {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    transform: scaleX(0);
-    transform-origin: left;
-    background: var(--creme-brulee);
-  }
-  .hiw-progress__line:nth-child(2) {
-    transform-origin: right;
-    background: rgba(162,123,91,0.3);
-  }
-
-  /* Step counter */
-  .hiw-counter {
-    position: absolute;
-    bottom: 24px; right: 28px;
-    font-family: 'Jost', sans-serif;
-    font-size: 10px; letter-spacing: 4px;
-    color: rgba(255,255,255,0.25);
-    z-index: 10;
-    pointer-events: none;
-  }
-  /* Section label */
-  .hiw-label {
-    position: absolute;
-    top: 28px; left: 28px;
-    font-family: 'Jost', sans-serif;
-    font-size: 10px; letter-spacing: 5px;
-    color: rgba(255,255,255,0.2);
-    text-transform: uppercase;
-    z-index: 10;
-    pointer-events: none;
-  }
-  /* Drag hint */
-  .hiw-drag-hint {
-    position: absolute;
-    bottom: 24px; left: 28px;
-    font-family: 'Jost', sans-serif;
-    font-size: 9px; letter-spacing: 3px;
-    color: rgba(255,255,255,0.2);
-    z-index: 10;
-    pointer-events: none;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .hiw-drag-hint::before {
-    content: '⟵';
-    font-size: 14px;
-  }
-  .hiw-drag-hint::after {
-    content: '⟶';
-    font-size: 14px;
-  }
-
-  /* Old cinematic panel styles — hidden */
-  .hiw-pin-stage, .hiw-panel, .hiw-dots, .hiw-tracker,
-  .hiw-bg-num, .hiw-scroll-hint, .hiw-step-counter,
-  .hiw-section-label, .hiw-progress-bar { display: none !important; }
-
-  /* Compatibility stubs */
-  .hiw-btn-wrap { padding: 0; }
-  .hiw-btn {
-    display: block; width: 100%;
-    background: #2C3639; color: #DCD7C9;
-    border: none; cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; letter-spacing: 4px;
-    font-weight: 500; padding: 22px;
-    text-transform: uppercase; text-align: center;
-    transition: background 0.3s;
-  }
-  .hiw-nav, .hiw-logo, .hiw-body, .steps-layout,
-  .steps-right, .phone-sketch { display: none; }
-  .step { will-change: transform, opacity; }
-  .step-num { font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 700; color: rgba(44,54,57,0.08); }
-  .step-title { font-size: 11px; letter-spacing: 3px; font-weight: 600; color: #2C3639; }
-  .step-desc { font-size: 15px; line-height: 1.5; color: #2C3639; }
 
   /* ── SLIDE 5: PILLARS ── */
   #slide5 { background: transparent; }
@@ -1253,119 +1062,185 @@
   .scale-feature { will-change: transform, opacity; }
 
   /* ══════════════════════════════════════════════
-     SLIDE 1B: WHY WE EXIST
+     SLIDE 1B: WHY WE EXIST — Insomnia Scroll (Lenis + GSAP)
   ══════════════════════════════════════════════ */
+
   #slide-why {
-    background: transparent;
-    height: 100vh;
-    /* overflow:visible — GSAP injects a pin spacer div immediately after
-       this element in the DOM. If overflow is hidden/auto, the browser
-       creates a new block formatting context which causes the spacer to be
-       mispositioned, producing the scroll-jump glitch at section entry/exit.
-       Visual clipping is handled by .why-stage (the child div) instead. */
+    background: #0e0e0e;
     overflow: visible;
     position: relative;
   }
 
-  .why-stage {
-    position: relative;
+  /* 1. Fixed massive marquee — mix-blend-mode: difference */
+  .why-header-fixed {
+    position: fixed;
+    top: 0; left: 0;
     width: 100%;
-    height: 100vh;
+    height: 40vh;
+    z-index: 50;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: var(--inkwell);
-    /* Stage clips the flying cards so they don't visually bleed,
-       but the section itself stays overflow:visible for the spacer */
-    overflow: hidden;
-  }
-
-  /* The big title */
-  .why-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 9vw, 60px);
-    font-weight: 700;
-    letter-spacing: 4px;
-    color: var(--au-lait);
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    white-space: nowrap;
     pointer-events: none;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
+    mix-blend-mode: difference;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
   }
+  .why-header-fixed.visible { opacity: 1; }
 
-  /* Three image cards */
-  .why-img-grid {
+  .why-marquee-inner {
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-end;       /* cards grow upward — anchored at base, clean expansion */
-    padding: 0 20px;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  .why-img-card {
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--lunar);
+    white-space: nowrap;
+    will-change: transform;
     flex-shrink: 0;
-    will-change: transform, opacity;
-    position: relative;
-    backface-visibility: hidden;
+  }
+  .why-marquee-inner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18vw;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    padding-right: 0.15em;
+    color: #fff;
+    flex-shrink: 0;
+    letter-spacing: -3px;
+    user-select: none;
   }
 
-  .why-img-card::before {
-    content: '';
+  /* Sub-label fixed */
+  .why-sub-header {
+    position: fixed;
+    top: 35vh; left: 5vw;
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    z-index: 51;
+    mix-blend-mode: difference;
+    color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .why-sub-header.visible { opacity: 1; }
+
+  /* 2. Content starts below the fixed header */
+  .why-content-wrap { padding-top: 60vh; }
+
+  /* 3. Project row — exact reference layout */
+  .why-project-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 10vh 5vw;
+    min-height: 100vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    position: relative;
+    background: #0e0e0e;
+    gap: 0;
+  }
+
+  /* Side text — 25%, muted, brightens on hover */
+  .why-side-text {
+    width: 25%;
+    padding-right: 40px;
+    opacity: 0.45;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(13px, 1.4vw, 16px);
+    line-height: 1.8;
+    color: rgba(220,215,201,0.9);
+    transition: opacity 0.5s ease;
+    will-change: opacity, transform;
+    flex-shrink: 0;
+    position: sticky;
+    top: 18vh;
+    align-self: flex-start;
+  }
+  .why-project-row:hover .why-side-text { opacity: 1; }
+
+  .why-side-num {
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--creme-brulee);
+    display: block;
+    margin-bottom: 1.6rem;
+    text-transform: uppercase;
+  }
+  .why-side-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 2.8vw, 42px);
+    font-weight: 700;
+    color: var(--au-lait);
+    line-height: 1.05;
+    margin: 0 0 1.6rem 0;
+    letter-spacing: -0.5px;
+  }
+  .why-side-desc {
+    font-size: clamp(13px, 1.3vw, 15px);
+    line-height: 1.8;
+    color: rgba(220,215,201,0.5);
+    font-weight: 300;
+  }
+
+  /* Image container — 60%, overflow hidden, parallax */
+  .why-img-box {
+    width: 60%;
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+    background: #111;
+    flex-shrink: 0;
+  }
+  .why-img-box img {
+    width: 100%;
+    height: 140%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+    will-change: transform;
+  }
+  .why-img-box-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(160deg, rgba(162,123,91,0.3) 0%, transparent 60%);
+    background: linear-gradient(160deg, rgba(162,123,91,0.10) 0%, transparent 50%);
     z-index: 1;
     pointer-events: none;
   }
 
-  .why-img-card .why-card-inner {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
+  /* Floating dot nav */
+  .why-dot-nav {
+    position: fixed;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    align-items: flex-end;
-    padding: 12px;
+    gap: 15px;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .why-dot-nav.visible { opacity: 1; }
+  .why-dot {
+    width: 12px; height: 12px;
+    border: 1px solid rgba(220,215,201,0.45);
+    border-radius: 50%;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .why-dot.active {
+    background: var(--au-lait);
+    border-color: var(--au-lait);
+    transform: scale(1.3);
   }
 
-  .why-card-1 .why-card-inner {
-    background-image: linear-gradient(135deg, #3F4E4F 0%, #2C3639 40%, #A27B5B 100%);
-  }
-  .why-card-2 .why-card-inner {
-    background-image: linear-gradient(160deg, #2C3639 0%, #A27B5B 50%, #3F4E4F 100%);
-  }
-  .why-card-3 .why-card-inner {
-    background-image: linear-gradient(110deg, #A27B5B 0%, #3F4E4F 40%, #2C3639 100%);
-  }
+  .why-end-spacer { height: 20vh; background: #0e0e0e; }
 
-  .why-card-label {
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: var(--au-lait);
-    opacity: 0.7;
-    font-family: 'Jost', sans-serif;
-    font-weight: 500;
-    position: relative;
-    z-index: 2;
-    text-transform: uppercase;
-  }
+  /* Suppress all legacy why elements */
+  .why-stage, .why-title, .why-img-grid,
+  .why-img-card, .why-card-inner, .why-card-label,
+  .why-marquee-wrap, .why-editorial-section,
+  .why-spacer-end { display: none !important; }
+
 
   /* ── MOBILE RESPONSIVE ── */
   /* All px font sizes scale with viewport width on small screens */
@@ -1533,34 +1408,74 @@
 
 <div class="section-blend blend-1-why" aria-hidden="true"></div>
 
-<!-- ══ SLIDE 1B: WHY WE EXIST ══ -->
+<!-- ══ SLIDE 1B: WHY WE EXIST — Insomnia Scroll ══ -->
 <section id="slide-why">
-  <div class="why-stage" id="why-stage">
 
-    <!-- The title — starts huge (zoomed in), user scrolls → normal size, then shrinks to top-left -->
-    <div class="why-title" id="why-title">WHY WE EXIST?</div>
-
-    <!-- Three image cards — start tiny, each expands as user scrolls, then shrinks again, then exit -->
-    <div class="why-img-grid" id="why-img-grid">
-      <div class="why-img-card why-card-1" id="why-card-1">
-        <div class="why-card-inner">
-          <span class="why-card-label">The Wait</span>
-        </div>
-      </div>
-      <div class="why-img-card why-card-2" id="why-card-2">
-        <div class="why-card-inner">
-          <span class="why-card-label">The Moment</span>
-        </div>
-      </div>
-      <div class="why-img-card why-card-3" id="why-card-3">
-        <div class="why-card-inner">
-          <span class="why-card-label">The Experience</span>
-        </div>
-      </div>
+  <!-- Fixed massive blended marquee -->
+  <div class="why-header-fixed" id="why-header-fixed">
+    <div class="why-marquee-inner" id="why-marquee-inner">
+      <h1>WHY WE EXIST * WHY WE EXIST * WHY WE EXIST * </h1>
+      <h1>WHY WE EXIST * WHY WE EXIST * WHY WE EXIST * </h1>
     </div>
+  </div>
+
+  <!-- Fixed sub-label -->
+  <div class="why-sub-header" id="why-sub-header">Restro &nbsp;·&nbsp; 2026</div>
+
+  <!-- Content rows -->
+  <div class="why-content-wrap">
+
+    <!-- Row 1: The Wait -->
+    <section class="why-project-row" id="why-row-1">
+      <div class="why-side-text" id="why-side-1">
+        <span class="why-side-num">01 / The Wait</span>
+        <h3 class="why-side-title">The Wait</h3>
+        <p class="why-side-desc">Customers leave not because they refuse to wait — but because they're left in the dark. Uncertainty is the real enemy of the dining experience.</p>
+      </div>
+      <div class="why-img-box">
+        <div class="why-img-box-overlay"></div>
+        <img src="https://images.pexels.com/photos/3887985/pexels-photo-3887985.jpeg?auto=compress&cs=tinysrgb&w=1600" class="why-reveal-img" alt="The Wait" crossorigin="anonymous">
+      </div>
+    </section>
+
+    <!-- Row 2: The Moment -->
+    <section class="why-project-row" id="why-row-2">
+      <div class="why-side-text" id="why-side-2">
+        <span class="why-side-num">02 / The Moment</span>
+        <h3 class="why-side-title">The Moment</h3>
+        <p class="why-side-desc">Every second a guest stands idle is a missed connection. We transform the pre-table moment into the beginning of an extraordinary meal.</p>
+      </div>
+      <div class="why-img-box">
+        <div class="why-img-box-overlay"></div>
+        <img src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=1600" class="why-reveal-img" alt="The Moment" crossorigin="anonymous">
+      </div>
+    </section>
+
+    <!-- Row 3: The Experience -->
+    <section class="why-project-row" id="why-row-3">
+      <div class="why-side-text" id="why-side-3">
+        <span class="why-side-num">03 / The Experience</span>
+        <h3 class="why-side-title">The Experience</h3>
+        <p class="why-side-desc">From the first scan to the final bite — Restro orchestrates a seamless flow so your team can focus on the magic, not the friction.</p>
+      </div>
+      <div class="why-img-box">
+        <div class="why-img-box-overlay"></div>
+        <img src="https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1600" class="why-reveal-img" alt="The Experience" crossorigin="anonymous">
+      </div>
+    </section>
 
   </div>
+
+  <div class="why-end-spacer"></div>
+
 </section>
+
+<!-- Floating dot nav -->
+<div class="why-dot-nav" id="why-dot-nav">
+  <div class="why-dot active" id="why-dot-1"></div>
+  <div class="why-dot" id="why-dot-2"></div>
+  <div class="why-dot" id="why-dot-3"></div>
+</div>
 
 <div class="section-blend blend-why-2" aria-hidden="true"></div>
 
@@ -1639,99 +1554,104 @@
 <div class="section-blend blend-3-4" aria-hidden="true"></div>
 
 <!-- ══ SLIDE 4: HOW IT WORKS ══ -->
-<section id="slide4">
+<section id="slide4" style="position:relative;height:100vh;min-height:100vh;overflow:hidden;background:#111;cursor:grab;user-select:none;display:block;">
 
-  <!-- Section label -->
-  <div class="hiw-label">How It Works</div>
-  <div class="hiw-counter" id="hiw-counter">01 / 04</div>
-  <div class="hiw-drag-hint">DRAG</div>
+  <!-- WebGL canvas injected here by JS -->
 
-  <!-- Horizontal draggable slider -->
-  <div class="hiw-slider js-hiw-drag-area">
-    <div class="hiw-slider__inner js-hiw-slider">
+  <!-- header -->
+  <div style="position:absolute;top:0;left:0;width:100%;display:flex;justify-content:space-between;padding:2vw 2.5vw;pointer-events:none;z-index:10;">
+    <div style="color:rgba(255,255,255,0.3);font-family:'Jost',sans-serif;font-size:0.8rem;letter-spacing:4px;text-transform:uppercase;">How It Works</div>
+    <div id="hiw-counter" style="color:rgba(255,255,255,0.3);font-family:'Jost',sans-serif;font-size:0.8rem;letter-spacing:3px;">01 / 04</div>
+  </div>
 
-      <!-- Slide 1 -->
-      <div class="hiw-slide js-hiw-slide">
-        <div class="hiw-slide__inner js-hiw-slide__inner">
-          <img class="js-hiw-slide__img"
-            src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Entry" crossorigin="anonymous" draggable="false">
+  <!-- drag area — matches reference .slider padding:0 22.5vw -->
+  <div id="hiw-drag-area" style="position:relative;padding:0 22.5vw;display:flex;align-items:center;height:100%;user-select:none;z-index:2;">
+    <div id="hiw-slider-inner" style="display:flex;position:relative;">
+
+      <!-- CARD 1 -->
+      <div class="hiw-card" id="hiw-card-0" style="overflow:hidden;position:relative;flex-shrink:0;">
+        <div style="position:relative;overflow:hidden;width:55vw;padding-top:56.5%;">
+          <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600"
+               class="hiw-img" crossorigin="anonymous" draggable="false"
+               style="display:none;">
         </div>
       </div>
 
-      <!-- Slide 2 -->
-      <div class="hiw-slide js-hiw-slide" style="left:120%;">
-        <div class="hiw-slide__inner js-hiw-slide__inner">
-          <img class="js-hiw-slide__img"
-            src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Explore" crossorigin="anonymous" draggable="false">
+      <!-- CARD 2 -->
+      <div class="hiw-card" id="hiw-card-1" style="overflow:hidden;position:absolute;top:0;height:100%;left:120%;flex-shrink:0;">
+        <div style="position:relative;overflow:hidden;width:55vw;padding-top:56.5%;">
+          <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1600"
+               class="hiw-img" crossorigin="anonymous" draggable="false"
+               style="display:none;">
         </div>
       </div>
 
-      <!-- Slide 3 -->
-      <div class="hiw-slide js-hiw-slide" style="left:240%;">
-        <div class="hiw-slide__inner js-hiw-slide__inner">
-          <img class="js-hiw-slide__img"
-            src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Pre-order" crossorigin="anonymous" draggable="false">
+      <!-- CARD 3 -->
+      <div class="hiw-card" id="hiw-card-2" style="overflow:hidden;position:absolute;top:0;height:100%;left:240%;flex-shrink:0;">
+        <div style="position:relative;overflow:hidden;width:55vw;padding-top:56.5%;">
+          <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=1600"
+               class="hiw-img" crossorigin="anonymous" draggable="false"
+               style="display:none;">
         </div>
       </div>
 
-      <!-- Slide 4 -->
-      <div class="hiw-slide js-hiw-slide" style="left:360%;">
-        <div class="hiw-slide__inner js-hiw-slide__inner">
-          <img class="js-hiw-slide__img"
-            src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Arrival" crossorigin="anonymous" draggable="false">
+      <!-- CARD 4 -->
+      <div class="hiw-card" id="hiw-card-3" style="overflow:hidden;position:absolute;top:0;height:100%;left:360%;flex-shrink:0;">
+        <div style="position:relative;overflow:hidden;width:55vw;padding-top:56.5%;">
+          <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1600"
+               class="hiw-img" crossorigin="anonymous" draggable="false"
+               style="display:none;">
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- Centred title overlay — scrolls vertically as slides change -->
-  <div class="hiw-titles">
-    <!-- proxy to set height -->
-    <div class="hiw-title-item hiw-title-item--proxy" aria-hidden="true">
-      <div class="hiw-title-step">00 · PROXY</div>
-      <div class="hiw-title-main">Proxy Title</div>
-      <div class="hiw-title-desc">proxy description text here</div>
+  <!-- titles overlay — centred, overflow hidden, titles scroll vertically -->
+  <div id="hiw-titles" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);overflow:hidden;pointer-events:none;z-index:3;text-align:center;">
+    <!-- proxy: sets clip height -->
+    <div style="visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:0 20px;">
+      <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:5px;color:#A27B5B;text-transform:uppercase;margin-bottom:4px;">00 · PROXY</div>
+      <div style="font-family:'Playfair Display',serif;font-size:6vw;font-weight:bold;letter-spacing:-0.1vw;color:#fff;line-height:1.1;">Lorem Ipsum</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2.2vw,19px);color:rgba(220,215,201,0.6);line-height:1.6;font-weight:300;max-width:420px;">Lorem ipsum dolor sit amet consectetur adipiscing.</div>
     </div>
-    <!-- actual list, translates upward -->
-    <div class="hiw-titles__list js-hiw-titles">
-      <div class="hiw-title-item js-hiw-title">
-        <div class="hiw-title-step">01 · ENTRY</div>
-        <div class="hiw-title-main">Scan &amp; Step In</div>
-        <div class="hiw-title-desc">Scan the QR code at the entrance for instant menu access.</div>
+    <!-- animated list -->
+    <div id="hiw-titles-list" style="position:absolute;top:0;left:0;width:100%;will-change:transform;">
+      <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:0 20px;">
+        <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:5px;color:#A27B5B;text-transform:uppercase;margin-bottom:4px;">01 · ENTRY</div>
+        <div style="font-family:'Playfair Display',serif;font-size:6vw;font-weight:bold;letter-spacing:-0.1vw;color:#fff;line-height:1.1;">Scan &amp; Step In</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2.2vw,19px);color:rgba(220,215,201,0.6);line-height:1.6;font-weight:300;max-width:420px;">Scan the QR code at the entrance for instant menu access.</div>
       </div>
-      <div class="hiw-title-item js-hiw-title">
-        <div class="hiw-title-step">02 · EXPLORE</div>
-        <div class="hiw-title-main">Browse Live Menu</div>
-        <div class="hiw-title-desc">Browse the live menu with real-time availability updates.</div>
+      <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:0 20px;">
+        <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:5px;color:#A27B5B;text-transform:uppercase;margin-bottom:4px;">02 · EXPLORE</div>
+        <div style="font-family:'Playfair Display',serif;font-size:6vw;font-weight:bold;letter-spacing:-0.1vw;color:#fff;line-height:1.1;">Browse Live Menu</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2.2vw,19px);color:rgba(220,215,201,0.6);line-height:1.6;font-weight:300;max-width:420px;">Browse the live menu with real-time availability updates.</div>
       </div>
-      <div class="hiw-title-item js-hiw-title">
-        <div class="hiw-title-step">03 · PRE-ORDER</div>
-        <div class="hiw-title-main">Order While Waiting</div>
-        <div class="hiw-title-desc">Place your order while waiting for your table to be ready.</div>
+      <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:0 20px;">
+        <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:5px;color:#A27B5B;text-transform:uppercase;margin-bottom:4px;">03 · PRE-ORDER</div>
+        <div style="font-family:'Playfair Display',serif;font-size:6vw;font-weight:bold;letter-spacing:-0.1vw;color:#fff;line-height:1.1;">Order While Waiting</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2.2vw,19px);color:rgba(220,215,201,0.6);line-height:1.6;font-weight:300;max-width:420px;">Place your order while waiting for your table to be ready.</div>
       </div>
-      <div class="hiw-title-item js-hiw-title">
-        <div class="hiw-title-step">04 · ARRIVAL</div>
-        <div class="hiw-title-main">Seated &amp; Served</div>
-        <div class="hiw-title-desc">Your food begins preparation as you pay and arrives ready exactly when you get seated.</div>
+      <div style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:0 20px;">
+        <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:5px;color:#A27B5B;text-transform:uppercase;margin-bottom:4px;">04 · ARRIVAL</div>
+        <div style="font-family:'Playfair Display',serif;font-size:6vw;font-weight:bold;letter-spacing:-0.1vw;color:#fff;line-height:1.1;">Seated &amp; Served</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2.2vw,19px);color:rgba(220,215,201,0.6);line-height:1.6;font-weight:300;max-width:420px;">Your food begins preparation as you pay and arrives ready exactly when you get seated.</div>
       </div>
     </div>
   </div>
 
-  <!-- Progress bar -->
-  <div class="hiw-progress">
-    <div class="hiw-progress__line js-hiw-progress-line"></div>
-    <div class="hiw-progress__line js-hiw-progress-line-2"></div>
+  <!-- progress bar -->
+  <div style="position:absolute;bottom:0;left:0;width:100%;height:0.25rem;overflow:hidden;pointer-events:none;z-index:100;">
+    <div id="hiw-pline1" style="position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:#fff;"></div>
+    <div id="hiw-pline2" style="position:absolute;top:0;left:0;width:100%;height:100%;transform:scaleX(1);transform-origin:right;background:rgba(255,255,255,0.2);"></div>
   </div>
+
+  <!-- drag hint -->
+  <div style="position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:'Jost',sans-serif;font-size:9px;letter-spacing:4px;color:rgba(255,255,255,0.2);pointer-events:none;z-index:10;text-transform:uppercase;">← drag →</div>
 
 </section>
 
 <div class="section-blend blend-4-5" aria-hidden="true"></div>
-
 <!-- ══ SLIDE 5: PILLARS ══ -->
 <section class="slide" id="slide5">
   <div class="orb orb-2" id="orb-s5-1" style="opacity:0.12;bottom:unset;top:-40px;"></div>
@@ -2080,6 +2000,7 @@
   </div>
 </section>
 
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -2165,6 +2086,18 @@
   // Disable default scroll-behavior for GSAP-controlled sections
   document.documentElement.style.scrollBehavior = 'auto';
 
+  /* ── Lenis smooth scroll — wired to GSAP ticker + ScrollTrigger
+        Exact reference: lerp:0.1, wheelMultiplier:1 ── */
+  const lenis = new Lenis({
+    lerp: 0.1,
+    wheelMultiplier: 1,
+    infinite: false,
+    smoothWheel: true,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
   /* ══════════════════════════════════════════════
      UNIVERSAL BACKGROUND — smooth color transitions
      Each section triggers a color change on the
@@ -2243,119 +2176,115 @@
   });
 
   /* ══════════════════════════════════════════════
-     SLIDE 1B: WHY WE EXIST — pinned scroll-driven
+     SLIDE 1B: WHY WE EXIST — Insomnia Scroll (Lenis + GSAP)
   ══════════════════════════════════════════════ */
   (function() {
-    const title   = document.getElementById('why-title');
-    const card1   = document.getElementById('why-card-1');
-    const card2   = document.getElementById('why-card-2');
-    const card3   = document.getElementById('why-card-3');
-    const section = document.getElementById('slide-why');
 
-    // Card dimensions
-    const CARD_BASE_W  = 90;
-    const CARD_BASE_H  = 120;
-    const CARD_FULL_W  = 260;
-    const CARD_FULL_H  = 340;
+    const whySection   = document.getElementById('slide-why');
+    const headerFixed  = document.getElementById('why-header-fixed');
+    const subHeader    = document.getElementById('why-sub-header');
+    const dotNav       = document.getElementById('why-dot-nav');
+    const marqueeInner = document.getElementById('why-marquee-inner');
+    const dots  = ['why-dot-1','why-dot-2','why-dot-3'].map(id => document.getElementById(id));
+    const rows  = ['why-row-1','why-row-2','why-row-3'].map(id => document.getElementById(id));
 
-    // Set initial states
-    gsap.set([card1, card2, card3], {
-      width:  CARD_BASE_W,
-      height: CARD_BASE_H,
-      opacity: 0,
-      x: 0,
-      y: 0,
-      transformOrigin: 'center center',
-      force3D: true,
+    if (!whySection || !marqueeInner) return;
+
+    /* ── Lenis smooth scroll — only active while slide-why is in viewport ──
+       We create a dedicated Lenis instance tied to the why section so the
+       rest of the page keeps its own scroll behaviour intact.               */
+    let lenis = null;
+
+    function initLenis() {
+      if (lenis) return;
+      lenis = new Lenis({
+        lerp: 0.08,           // silky 0.08 — matches reference feel
+        wheelMultiplier: 1,
+        infinite: false,
+      });
+      // Connect Lenis RAF to GSAP ticker for perfect frame sync
+      gsap.ticker.add((time) => { lenis && lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      // Sync Lenis with ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+    }
+
+    function destroyLenis() {
+      if (!lenis) return;
+      lenis.destroy();
+      lenis = null;
+    }
+
+    /* ── Show / hide fixed elements & activate Lenis ── */
+    ScrollTrigger.create({
+      trigger: whySection,
+      start: 'top 60%',
+      end: 'bottom 40%',
+      onEnter:     () => { headerFixed.classList.add('visible'); subHeader.classList.add('visible'); dotNav.classList.add('visible'); initLenis(); },
+      onLeave:     () => { headerFixed.classList.remove('visible'); subHeader.classList.remove('visible'); dotNav.classList.remove('visible'); },
+      onEnterBack: () => { headerFixed.classList.add('visible'); subHeader.classList.add('visible'); dotNav.classList.add('visible'); },
+      onLeaveBack: () => { headerFixed.classList.remove('visible'); subHeader.classList.remove('visible'); dotNav.classList.remove('visible'); },
     });
 
-    gsap.set(title, {
-      y: () => -(window.innerHeight * 0.7),
-      x: 0,
-      scale: 1,
-      opacity: 0,
-      transformOrigin: 'center center',
-      force3D: true,
-    });
-
-    // ── Build the scrubbed timeline ──
-    // We pin the why-stage DIV (not the section), so GSAP's spacer is
-    // injected correctly relative to the section's natural flow position.
-    // pinnedContainer: the section element ensures scroll measurements
-    // are taken from the correct offset.
-    const whyTL = gsap.timeline({
+    /* ── 1. Marquee xPercent -50 scrubbed to vertical scroll — exact reference ── */
+    gsap.to(marqueeInner, {
+      xPercent: -50,
+      ease: 'none',
       scrollTrigger: {
-        trigger: section,
+        trigger: whySection,
         start: 'top top',
-        end: '+=550%',
-        pin: true,
-        pinSpacing: true,
-        scrub: 1.5,          // tighter scrub = less lag at boundaries
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onLeave: () => {
-          // Hard-set end state so section exits cleanly
-          gsap.set([card1, card2, card3], { opacity: 0, clearProps: 'x,y' });
-          gsap.set(title, { opacity: 0 });
-        },
-        onLeaveBack: () => {
-          // Hard-set start state so section re-enters cleanly from above
-          gsap.set([card1, card2, card3], { opacity: 0, clearProps: 'x,y' });
-          gsap.set(title, {
-            opacity: 0,
-            y: () => -(window.innerHeight * 0.7),
-            x: 0,
-            scale: 1,
-          });
-        },
+        end: 'bottom bottom',
+        scrub: 0.5,
       }
     });
 
-    // PHASE 1 — Title flies in from above and lands at centre
-    whyTL.to(title, {
-      y: 0, opacity: 1,
-      ease: 'power2.out',
-      duration: 0.18,
-    }, 0.00);
+    /* ── 2. Image reveal parallax — exact reference fromTo y:-20%→0%, scrub:true ── */
+    whySection.querySelectorAll('.why-reveal-img').forEach(img => {
+      gsap.fromTo(img,
+        { y: '-20%' },
+        {
+          y: '0%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img.closest('.why-img-box'),
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          }
+        }
+      );
+    });
 
-    // PHASE 3 — Title shrinks + moves to top-left
-    whyTL.to(title, {
-      scale: 0.38,
-      x: () => -(window.innerWidth  / 2) + 84,
-      y: () => -(window.innerHeight / 2) + 40,
-      ease: 'power1.inOut',
-      duration: 0.18,
-    }, 0.22);
+    /* ── 3. Side text fade + slide — exact reference opacity:0, x:-20 ── */
+    whySection.querySelectorAll('.why-side-text').forEach(text => {
+      gsap.from(text, {
+        opacity: 0,
+        x: -30,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: text,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+    });
 
-    // PHASE 4 — Card 1 fades in
-    whyTL.to(card1, { opacity: 1, ease: 'power2.out', duration: 0.06 }, 0.37);
-    // PHASE 4b — Card 1 expands
-    whyTL.to(card1, { width: CARD_FULL_W, height: CARD_FULL_H, ease: 'power1.inOut', duration: 0.14 }, 0.41);
-    // PHASE 5 — Card 1 shrinks back
-    whyTL.to(card1, { width: CARD_BASE_W, height: CARD_BASE_H, ease: 'power1.inOut', duration: 0.10 }, 0.46);
+    /* ── 4. Active dot tracks which row is in view ── */
+    rows.forEach((row, i) => {
+      if (!row) return;
+      ScrollTrigger.create({
+        trigger: row,
+        start: 'top 55%',
+        end: 'bottom 55%',
+        onEnter:     () => setDot(i),
+        onEnterBack: () => setDot(i),
+      });
+    });
 
-    // PHASE 6 — Card 2 fades in + expands
-    whyTL.to(card2, { opacity: 1, ease: 'power2.out', duration: 0.06 }, 0.51);
-    whyTL.to(card2, { width: CARD_FULL_W, height: CARD_FULL_H, ease: 'power1.inOut', duration: 0.14 }, 0.55);
-    // PHASE 7 — Card 2 shrinks back
-    whyTL.to(card2, { width: CARD_BASE_W, height: CARD_BASE_H, ease: 'power1.inOut', duration: 0.10 }, 0.60);
-
-    // PHASE 8 — Card 3 fades in + expands
-    whyTL.to(card3, { opacity: 1, ease: 'power2.out', duration: 0.06 }, 0.65);
-    whyTL.to(card3, { width: CARD_FULL_W, height: CARD_FULL_H, ease: 'power1.inOut', duration: 0.14 }, 0.69);
-    // PHASE 9 — Card 3 shrinks back
-    whyTL.to(card3, { width: CARD_BASE_W, height: CARD_BASE_H, ease: 'power1.inOut', duration: 0.10 }, 0.74);
-
-    // PHASE 10 — Cards exit in three directions
-    whyTL.to(card1, { x: '-110vw', y: '-40vh', opacity: 0, ease: 'power3.in', duration: 0.12 }, 0.82);
-    whyTL.to(card2, { y: '100vh',              opacity: 0, ease: 'power3.in', duration: 0.12 }, 0.82);
-    whyTL.to(card3, { x:  '110vw', y: '-40vh', opacity: 0, ease: 'power3.in', duration: 0.12 }, 0.82);
-
-    // PHASE 11 — Title fades out
-    whyTL.to(title, { opacity: 0, ease: 'power2.in', duration: 0.08 }, 0.88);
-
-    // Add an explicit empty tween at t=1.0 so the timeline has clean end state
-    whyTL.set({}, {}, 1.0);
+    function setDot(idx) {
+      dots.forEach((d, i) => d && d.classList.toggle('active', i === idx));
+    }
 
   })();
 
@@ -2438,229 +2367,283 @@
   gsap.to('#orb-s3-1', { y: -70, ease: 'none', scrollTrigger: { trigger: '#slide3', scrub: 1.8, start: 'top bottom', end: 'bottom top' } });
 
   /* ══════════════════════════════════════════════
-     SLIDE 4: HOW IT WORKS — HORIZONTAL DRAG SLIDER WITH WEBGL RGB-SPLIT
-     Ported from reference animation (Jesper Landberg style)
+     SLIDE 4: HOW IT WORKS
+     Exact port of Jesper Landberg horizontal drag slider
+     with Three.js WebGL RGB-split shader + GSAP ticker
   ══════════════════════════════════════════════ */
   (function() {
+    const s4 = document.getElementById('slide4');
+    if (!s4 || typeof THREE === 'undefined') return;
 
-    const slide4 = document.getElementById('slide4');
-    if (!slide4) return;
+    /* ── dimensions (section-local) ── */
+    const ww = s4.offsetWidth;
+    const wh = s4.offsetHeight;
+    const isDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
 
-    /* ── Helpers ── */
-    const ww = slide4.offsetWidth;
-    const wh = slide4.offsetHeight;
-
-    /* ── GLSL Shaders ── */
+    /* ── GLSL shaders (exact from reference) ── */
     const bgCoverUv = `
-vec2 bgCoverUv(vec2 screen, vec2 img, vec2 uv){
-  float sr = screen.x/screen.y, ir = img.x/img.y;
-  vec2 ns = sr < ir ? vec2(img.x*screen.y/img.y, screen.y) : vec2(screen.x, img.y*screen.x/img.x);
-  vec2 no = (sr < ir ? vec2((ns.x-screen.x)/2.,0.) : vec2(0.,(ns.y-screen.y)/2.))/ns;
-  return uv*screen/ns + no;
+vec2 backgroundCoverUv(vec2 screenSize, vec2 imageSize, vec2 uv) {
+  float screenRatio = screenSize.x / screenSize.y;
+  float imageRatio  = imageSize.x  / imageSize.y;
+  vec2 newSize = screenRatio < imageRatio
+    ? vec2(imageSize.x * screenSize.y / imageSize.y, screenSize.y)
+    : vec2(screenSize.x, imageSize.y * screenSize.x / imageSize.x);
+  vec2 newOffset = (screenRatio < imageRatio
+    ? vec2((newSize.x - screenSize.x) / 2.0, 0.0)
+    : vec2(0.0, (newSize.y - screenSize.y) / 2.0)) / newSize;
+  return uv * screenSize / newSize + newOffset;
 }`;
 
-    const vertSrc = `
+    const vertexShader = `
 precision mediump float;
 uniform float uVelo;
 varying vec2 vUv;
-#define PI 3.14159265358979
+#define M_PI 3.1415926535897932384626433832795
 void main(){
   vec3 pos = position;
-  pos.x += (sin(uv.y * PI) * uVelo) * 0.125;
+  pos.x = pos.x + ((sin(uv.y * M_PI) * uVelo) * 0.125);
   vUv = uv;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos,1.);
 }`;
 
-    const fragSrc = `
+    const fragmentShader = `
 precision mediump float;
 ${bgCoverUv}
-uniform sampler2D uTex;
-uniform vec2 uMesh, uImg;
-uniform float uVelo, uScale;
+uniform sampler2D uTexture;
+uniform vec2 uMeshSize;
+uniform vec2 uImageSize;
+uniform float uVelo;
+uniform float uScale;
 varying vec2 vUv;
-void main(){
-  vec2 c = vec2(0.5);
-  vec2 tx = bgCoverUv(uMesh, uImg, vUv);
-  vec2 ts = (tx - c) * uScale + c;
-  vec4 col = texture2D(uTex, ts);
-  vec2 tg = ts; tg.x += 0.15 * uVelo;
-  if(vUv.x < 1.) col.g = texture2D(uTex, tg).g;
-  tg.x += 0.10 * uVelo;
-  if(vUv.x < 1.) col.b = texture2D(uTex, tg).b;
-  gl_FragColor = col;
+void main() {
+  vec2 uv = vUv;
+  vec2 texCenter = vec2(0.5);
+  vec2 texUv = backgroundCoverUv(uMeshSize, uImageSize, uv);
+  vec2 texScale = (texUv - texCenter) * uScale + texCenter;
+  vec4 texture = texture2D(uTexture, texScale);
+  texScale.x += 0.15 * uVelo;
+  if(uv.x < 1.) texture.g = texture2D(uTexture, texScale).g;
+  texScale.x += 0.10 * uVelo;
+  if(uv.x < 1.) texture.b = texture2D(uTexture, texScale).b;
+  gl_FragColor = texture;
 }`;
 
-    /* ── Three.js Scene ── */
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(
-      ww/-2, ww/2, wh/2, wh/-2, 1, 10
-    );
+    /* ── Three.js GL — orthographic camera sized to section ── */
+    const scene  = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(ww/-2, ww/2, wh/2, wh/-2, 1, 10);
+    camera.lookAt(scene.position);
     camera.position.z = 1;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(ww, wh);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x111111, 1); /* opaque dark bg */
 
+    /* canvas: absolute, fills section, behind DOM (z-index 1) */
     const canvas = renderer.domElement;
-    canvas.classList.add('hiw-dom-gl');
-    slide4.appendChild(canvas);
+    canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;';
+    s4.insertBefore(canvas, s4.firstChild);
 
-    const loader = new THREE.TextureLoader();
+    /* ── Geometry + material shared base ── */
+    const planeGeo = new THREE.PlaneBufferGeometry(1, 1, 32, 32);
+    const planeMat = new THREE.ShaderMaterial({ transparent: true, vertexShader, fragmentShader });
+    const loader   = new THREE.TextureLoader();
     loader.crossOrigin = 'anonymous';
 
-    const planeGeo = new THREE.PlaneBufferGeometry(1, 1, 32, 32);
-    const planeMat = new THREE.ShaderMaterial({
-      transparent: true,
-      vertexShader: vertSrc,
-      fragmentShader: fragSrc
+    /* ── GlObject: positions mesh in local section coords ── */
+    class GlObject extends THREE.Object3D {
+      init(el) {
+        this.el = el;
+        /* getBoundingClientRect is relative to viewport;
+           subtract section's top-left to get section-local coords */
+        const s4rect = s4.getBoundingClientRect();
+        const r = el.getBoundingClientRect();
+        const localLeft = r.left - s4rect.left;
+        const localTop  = r.top  - s4rect.top;
+        const w = r.width, h = r.height;
+        this.rect = { left: localLeft, top: localTop, width: w, height: h, right: localLeft + w };
+        /* Three.js orthographic: origin at centre, y-up */
+        this.pos = {
+          x:  (localLeft + w/2) - ww/2,
+          y: -((localTop  + h/2) - wh/2)
+        };
+        this.position.set(this.pos.x, this.pos.y, 0);
+      }
+      updateX(t) {
+        if (t !== undefined) this.position.x = this.pos.x + t;
+      }
+    }
+
+    /* ── Plane ── */
+    class Plane extends GlObject {
+      init(el) {
+        super.init(el);
+        const { width: w, height: h } = this.rect;
+        this.mat = planeMat.clone();
+        this.mat.uniforms = {
+          uTime:     { value: 0 },
+          uTexture:  { value: null },
+          uMeshSize: { value: new THREE.Vector2(w, h) },
+          uImageSize:{ value: new THREE.Vector2(0, 0) },
+          uScale:    { value: 0.75 },
+          uVelo:     { value: 0 }
+        };
+        const img = el.querySelector('img');
+        loader.load(img.src, (tex) => {
+          tex.minFilter = THREE.LinearFilter;
+          tex.generateMipmaps = false;
+          this.mat.uniforms.uTexture.value = tex;
+          this.mat.uniforms.uImageSize.value.set(img.naturalWidth || 1600, img.naturalHeight || 1066);
+        });
+        const mesh = new THREE.Mesh(planeGeo, this.mat);
+        mesh.scale.set(w, h, 1);
+        this.add(mesh);
+        scene.add(this);
+      }
+    }
+
+    /* ── DOM refs ── */
+    const sliderEl   = document.getElementById('hiw-slider-inner');
+    const items      = Array.from(s4.querySelectorAll('.hiw-card'));
+    const titlesList = document.getElementById('hiw-titles-list');
+    const titleItems = Array.from(titlesList.children);
+    const pLine1     = document.getElementById('hiw-pline1');
+    const pLine2     = document.getElementById('hiw-pline2');
+    const counter    = document.getElementById('hiw-counter');
+
+    /* ── State (exact reference) ── */
+    const opts  = { speed: 2, threshold: 50, ease: 0.075 };
+    const state = {
+      target: 0, current: 0, currentRounded: 0,
+      on: { x:0, y:0 }, off: 0,
+      progress: 0, diff: 0, max: 0,
+      flags: { dragging: false }
+    };
+
+    /* ── Bounding (exact reference) ── */
+    const { width: wrapWidth, left: wrapDiff } = sliderEl.getBoundingClientRect();
+    state.max = -(items[items.length - 1].getBoundingClientRect().right - wrapWidth - wrapDiff);
+
+    /* ── Build WebGL planes + per-item scale timeline ── */
+    const cached = items.map((el) => {
+      /* Use section-local left/right for visibility checks */
+      const s4rect = s4.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      const localLeft  = r.left  - s4rect.left;
+      const localRight = r.right - s4rect.left;
+      const width      = r.width;
+
+      const plane = new Plane();
+      plane.init(el);
+
+      const tl = gsap.timeline({ paused: true })
+        .fromTo(plane.mat.uniforms.uScale, { value: 0.65 }, { value: 1, duration: 1, ease: 'linear' });
+
+      return {
+        el, plane,
+        left:  localLeft,
+        right: localRight,
+        width,
+        min: localLeft < ww ? (ww * 0.775) : -(ww * 0.225 - wrapWidth * 0.2),
+        max: localLeft > ww ? state.max - (ww * 0.775) : state.max + (ww * 0.225 - wrapWidth * 0.2),
+        tl, out: false
+      };
     });
 
-    /* ── Slider state ── */
-    const sliderEl = slide4.querySelector('.js-hiw-slider');
-    const items    = Array.from(slide4.querySelectorAll('.js-hiw-slide'));
-    const titles   = Array.from(slide4.querySelectorAll('.js-hiw-title'));
-    const titleList = slide4.querySelector('.js-hiw-titles');
-    const pLine1   = slide4.querySelector('.js-hiw-progress-line');
-    const pLine2   = slide4.querySelector('.js-hiw-progress-line-2');
-    const counter  = slide4.querySelector('#hiw-counter');
-
-    const { width: wrapW, left: wrapLeft } = sliderEl.getBoundingClientRect();
-
-    let target = 0, current = 0, diff = 0, progress = 0;
-    const ease = 0.075;
-    const speed = 2;
-    const threshold = 50;
-
-    let maxScroll = 0;
-    const glItems = [];
-
-    /* ── Build global timeline ── */
-    const tl = gsap.timeline({
+    /* ── Master GSAP timeline (exact reference) ── */
+    const masterTL = gsap.timeline({
       paused: true,
       defaults: { duration: 1, ease: 'linear' }
     })
-    .fromTo('.js-hiw-progress-line-2', { scaleX: 1 }, { scaleX: 0, duration: 0.5, ease: 'power3' }, 0)
-    .fromTo('.js-hiw-titles',         { yPercent: 0 }, { yPercent: -(100 - 100/titles.length) }, 0)
-    .fromTo('.js-hiw-progress-line',  { scaleX: 0 }, { scaleX: 1 }, 0);
+    .fromTo(pLine2,     { scaleX: 1 }, { scaleX: 0, duration: 0.5, ease: 'power3', transformOrigin: 'right' }, 0)
+    .fromTo(titlesList, { yPercent: 0 }, { yPercent: -(100 - 100 / titleItems.length) }, 0)
+    .fromTo(pLine1,     { scaleX: 0, transformOrigin: 'left' }, { scaleX: 1, transformOrigin: 'left' }, 0);
 
-    /* ── Cache items + create WebGL planes ── */
-    maxScroll = -(items[items.length-1].getBoundingClientRect().right - wrapW - wrapLeft);
+    gsap.set(pLine1, { scaleX: 0, transformOrigin: 'left' });
+    gsap.set(pLine2, { scaleX: 1, transformOrigin: 'right' });
 
-    for (let i = 0; i < items.length; i++) {
-      const el = items[i];
-      const { left, right, width } = el.getBoundingClientRect();
-
-      /* Per-item material */
-      const mat = planeMat.clone();
-      mat.uniforms = {
-        uTex:   { value: null },
-        uMesh:  { value: new THREE.Vector2(width, el.getBoundingClientRect().height) },
-        uImg:   { value: new THREE.Vector2(1,1) },
-        uScale: { value: 0.75 },
-        uVelo:  { value: 0 }
-      };
-
-      /* Load image into texture */
-      const img = el.querySelector('img');
-      loader.load(img.src, (tex) => {
-        tex.minFilter = THREE.LinearFilter;
-        tex.generateMipmaps = false;
-        mat.uniforms.uTex.value = tex;
-        mat.uniforms.uImg.value.set(img.naturalWidth || 1200, img.naturalHeight || 800);
-      });
-
-      /* Mesh positioned to match DOM element */
-      const { left: l, top: t, width: w, height: h } = el.getBoundingClientRect();
-      const posX = (l + w/2) - ww/2;
-      const posY = -((t + h/2) - wh/2);
-      const mesh = new THREE.Mesh(planeGeo, mat);
-      mesh.scale.set(w, h, 1);
-      mesh.position.set(posX, posY, 0);
-      scene.add(mesh);
-
-      /* Per-item scale timeline */
-      const itemTl = gsap.timeline({ paused: true })
-        .fromTo(mat.uniforms.uScale, { value: 0.65 }, { value: 1, duration: 1, ease: 'linear' });
-
-      const minV = left < ww ? ww*0.775 : -(ww*0.225 - wrapW*0.2);
-      const maxV = left > ww ? maxScroll - ww*0.775 : maxScroll + (ww*0.225 - wrapW*0.2);
-
-      glItems.push({ el, mat, mesh, left, right, width, posX, posY, min: minV, max: maxV, tl: itemTl, out: false });
+    /* ── isVisible (exact reference) ── */
+    function isVisible(item) {
+      const translate = gsap.utils.wrap(item.min, item.max, state.currentRounded);
+      const start = item.left + translate;
+      const end   = item.right + translate;
+      const vis   = start < (opts.threshold + ww) && end > -opts.threshold;
+      const prog  = gsap.utils.clamp(0, 1, 1 - (translate + item.left + item.width) / (ww + item.width));
+      return { translate, isVisible: vis, progress: prog };
     }
 
-    /* ── Drag state ── */
-    let dragging = false, onX = 0, offTarget = 0;
-    const isDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const evDown = isDevice ? 'touchstart' : 'mousedown';
-    const evMove = isDevice ? 'touchmove' : 'mousemove';
-    const evUp   = isDevice ? 'touchend'  : 'mouseup';
-
-    function getX(e) {
-      return e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    /* ── calc (exact reference) ── */
+    function calc() {
+      state.current      += (state.target - state.current) * opts.ease;
+      state.currentRounded = Math.round(state.current * 100) / 100;
+      state.diff           = (state.target - state.current) * 0.0005;
+      state.target         = gsap.utils.clamp(state.max, 0, state.target);
+      state.progress       = gsap.utils.wrap(0, 1, state.currentRounded / state.max);
+      masterTL.progress(state.progress);
     }
 
-    slide4.addEventListener(evDown, (e) => {
-      dragging = true;
-      onX = getX(e);
-    });
-    window.addEventListener(evUp, () => {
-      dragging = false;
-      offTarget = target;
-    });
-    window.addEventListener(evMove, (e) => {
-      if (!dragging) return;
-      const dx = getX(e) - onX;
-      target = offTarget + dx * speed;
-      target = Math.max(maxScroll, Math.min(0, target));
-      if (Math.abs(dx) > 5 && e.cancelable) { e.preventDefault(); e.stopPropagation(); }
-    }, { passive: false });
-
-    /* ── Render loop (added to existing GSAP ticker) ── */
-    function hiwRender() {
-      current += (target - current) * ease;
-      const cur = Math.round(current * 100) / 100;
-      diff = (target - current) * 0.0005;
-      progress = cur / maxScroll; // 0→1 as dragged left
-
-      /* Global timeline */
-      tl.progress(gsap.utils.wrap(0, 1, progress));
-
-      /* Counter */
-      const step = Math.min(3, Math.round(progress * 4));
-      if (counter) counter.textContent = `0${step+1} / 04`;
-
-      /* Per-item */
-      for (let i = 0; i < glItems.length; i++) {
-        const item = glItems[i];
-        const wrap = gsap.utils.wrap(item.min, item.max, cur);
-        const start = item.left + wrap;
-        const end   = item.right + wrap;
-        const vis   = start < threshold + ww && end > -threshold;
-        const prog  = gsap.utils.clamp(0, 1, 1 - (wrap + item.left + item.width) / (ww + item.width));
-
-        /* Move mesh */
-        item.mesh.position.x = item.posX + wrap;
-
-        /* Velo + scale */
-        item.mat.uniforms.uVelo.value = diff;
+    /* ── transformItems (exact reference) ── */
+    function transformItems() {
+      for (let i = 0; i < cached.length; i++) {
+        const item = cached[i];
+        const { translate, isVisible: vis, progress: prog } = isVisible(item);
+        item.plane.updateX(translate);
+        item.plane.mat.uniforms.uVelo.value = state.diff;
         if (!item.out && item.tl) item.tl.progress(prog);
         item.out = !vis;
       }
-
-      renderer.render(scene, camera);
     }
 
-    gsap.ticker.add(hiwRender);
+    /* ── counter ── */
+    function updateCounter() {
+      const n    = cached.length;
+      const step = Math.min(n - 1, Math.floor(state.progress * n));
+      if (counter) counter.textContent = '0' + (step + 1) + ' / 0' + n;
+    }
 
-    /* ── Initialise progress line 2 ── */
-    gsap.set('.js-hiw-progress-line-2', { scaleX: 1, transformOrigin: 'right' });
+    /* ── Drag events ── */
+    const evDown = isDevice ? 'touchstart' : 'mousedown';
+    const evMove = isDevice ? 'touchmove'  : 'mousemove';
+    const evUp   = isDevice ? 'touchend'   : 'mouseup';
+
+    function getPos(e) {
+      const t = e.changedTouches;
+      return { x: t ? t[0].clientX : e.clientX, y: t ? t[0].clientY : e.clientY };
+    }
+
+    s4.addEventListener(evDown, (e) => {
+      const { x, y } = getPos(e);
+      state.flags.dragging = true;
+      state.on.x = x; state.on.y = y;
+      s4.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener(evMove, (e) => {
+      if (!state.flags.dragging) return;
+      const { x, y } = getPos(e);
+      const moveX = x - state.on.x;
+      const moveY = y - state.on.y;
+      if (Math.abs(moveX) > Math.abs(moveY) && e.cancelable) {
+        e.preventDefault(); e.stopPropagation();
+      }
+      state.target = state.off + (moveX * opts.speed);
+    }, { passive: false });
+
+    window.addEventListener(evUp, () => {
+      state.flags.dragging = false;
+      state.off = state.target;
+      s4.style.cursor = 'grab';
+    });
+
+    /* ── render loop added to GSAP ticker ── */
+    gsap.ticker.add(() => {
+      calc();
+      transformItems();
+      updateCounter();
+      renderer.render(scene, camera);
+    });
 
   })();
-
-  /* ══════════════════════════════════════════════
-     SLIDE 5: PILLARS — cards fly in from scattered positions
-  ══════════════════════════════════════════════ */
 
   gsap.from('#pillars-title', {
     opacity: 0, y: 50, duration: 0.9,
