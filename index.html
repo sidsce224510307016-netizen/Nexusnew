@@ -1344,9 +1344,18 @@
       playsinline
       preload="auto"
     >
+      <!-- Your local video (loads first if in same folder) -->
       <source src="Food Reel - Darío Idoate.mp4" type="video/mp4">
-      <source src="https://videos.pexels.com/video-files/3295827/3295827-uhd_2560_1440_25fps.mp4" type="video/mp4">
-      <source src="https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4" type="video/mp4">
+      <!-- Cinematic chef cooking close-up — Pexels #2773498 -->
+      <source src="https://videos.pexels.com/video-files/2773498/2773498-hd_1920_1080_30fps.mp4" type="video/mp4">
+      <!-- Restaurant kitchen with fire — Pexels #3255353 -->
+      <source src="https://videos.pexels.com/video-files/3255353/3255353-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <!-- Fine dining food plating — Pexels #4253925 -->
+      <source src="https://videos.pexels.com/video-files/4253925/4253925-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <!-- Chef at stove cinematic — Pexels #3209828 -->
+      <source src="https://videos.pexels.com/video-files/3209828/3209828-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <!-- Restaurant ambiance — Pexels #3295827 -->
+      <source src="https://videos.pexels.com/video-files/3295827/3295827-hd_1920_1080_25fps.mp4" type="video/mp4">
     </video>
     <div class="hero-video-overlay"></div>
   </div>
@@ -1900,49 +1909,64 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
   /* ══════════════════════════════════════════════
-     VIDEO AUTOPLAY — Chrome compliance
-     muted + playsinline satisfies Chrome's autoplay policy.
-     We also attempt .play() after a short delay as extra insurance.
+     VIDEO AUTOPLAY — Chrome compliance + fallback source cycling
   ══════════════════════════════════════════════ */
   (function() {
-    // Primary: fullscreen hero video
     const fsVid = document.getElementById('hero-video-fullscreen');
-    if (fsVid) {
-      fsVid.muted = true;
-      fsVid.playsInline = true;
+    if (!fsVid) return;
 
-      const tryPlayFs = () => {
-        fsVid.play().catch(() => {
-          fsVid.muted = true;
-          fsVid.play().catch(() => {});
-        });
-      };
+    fsVid.muted = true;
+    fsVid.playsInline = true;
 
-      if (document.readyState === 'complete') {
-        tryPlayFs();
-      } else {
-        window.addEventListener('load', tryPlayFs);
-      }
-      document.addEventListener('click', tryPlayFs, { once: true });
-      document.addEventListener('touchstart', tryPlayFs, { once: true });
+    // Ordered list of cinematic restaurant/cooking video fallbacks
+    const videoSources = [
+      'Food Reel - Darío Idoate.mp4',
+      'https://videos.pexels.com/video-files/2773498/2773498-hd_1920_1080_30fps.mp4',
+      'https://videos.pexels.com/video-files/3255353/3255353-hd_1920_1080_25fps.mp4',
+      'https://videos.pexels.com/video-files/4253925/4253925-hd_1920_1080_25fps.mp4',
+      'https://videos.pexels.com/video-files/3209828/3209828-hd_1920_1080_25fps.mp4',
+      'https://videos.pexels.com/video-files/3295827/3295827-hd_1920_1080_25fps.mp4',
+    ];
+    let srcIndex = 0;
 
-      // If video fails to load (e.g. network error), show animated gradient fallback
-      fsVid.addEventListener('error', function() {
+    function tryNextSource() {
+      if (srcIndex >= videoSources.length) {
+        // All sources exhausted — show animated gradient fallback
         const bg = document.getElementById('hero-video-bg');
         if (bg) {
-          bg.style.background = 'linear-gradient(135deg, #1a1008 0%, #2C1810 30%, #3F2818 50%, #2C1810 70%, #1a1008 100%)';
+          bg.style.background = 'linear-gradient(135deg, #0a0704 0%, #1a0e08 20%, #2C1810 40%, #1a0e08 60%, #0a0704 80%, #1a0e08 100%)';
           bg.style.backgroundSize = '400% 400%';
-          bg.style.animation = 'heroBgPan 8s ease infinite';
+          bg.style.animation = 'heroBgPan 10s ease infinite';
         }
+        return;
+      }
+      fsVid.src = videoSources[srcIndex++];
+      fsVid.load();
+      fsVid.play().catch(() => {
+        // Autoplay blocked — try on first interaction
       });
     }
 
-    // Legacy hidden video (kept for GSAP refs)
-    const vid = document.getElementById('hero-video');
-    if (vid) {
-      vid.muted = true;
-      vid.playsInline = true;
+    fsVid.addEventListener('error', tryNextSource);
+
+    const tryPlay = () => {
+      fsVid.play().catch(() => {
+        fsVid.muted = true;
+        fsVid.play().catch(() => {});
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      tryPlay();
+    } else {
+      window.addEventListener('load', tryPlay);
     }
+    document.addEventListener('click', tryPlay, { once: true });
+    document.addEventListener('touchstart', tryPlay, { once: true });
+
+    // Legacy hidden video
+    const vid = document.getElementById('hero-video');
+    if (vid) { vid.muted = true; vid.playsInline = true; }
   })();
 
   /* ══════════════════════════════════════════════
