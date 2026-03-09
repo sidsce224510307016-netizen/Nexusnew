@@ -1140,7 +1140,6 @@
   </nav>
 
   <div class="hero-content">
-    <h1 class="hero-title" id="hero-title">Peak Hours Should Be Your <br> <b>Most Profitable</b> <br> Not Most Chaotic</h1>
     <button class="btn-primary" id="hero-btn" onclick="goToSlide(9)">BOOK A DEMO</button>
   </div>
 
@@ -1159,8 +1158,11 @@
         <!-- Fallback if video cannot load -->
         <div class="restaurant-img-inner" id="hero-img-inner"></div>
       </video>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;padding:24px;text-align:center;">
+        <h1 class="hero-title" id="hero-title" style="color:#DCD7C9;text-shadow:0 2px 16px rgba(0,0,0,0.45);margin-bottom:0;">Peak Hours Should Be Your <br> <b>Most Profitable</b> <br> Not Most Chaotic</h1>
+      </div>
     </div>
-    <div class="img-caption" id="hero-caption">THE NEW STANDARD OF SERVICE</div>
+    <button class="img-caption" id="hero-caption" onclick="goToSlide(9)" style="cursor:pointer;background:none;border:none;width:100%;display:block;font-family:'Jost',sans-serif;letter-spacing:4px;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='#2C3639';this.style.color='#DCD7C9';" onmouseout="this.style.background='';this.style.color='';">BOOK A DEMO</button>
   </div>
 
   <p class="hero-tagline" id="hero-tagline"><b>Elevate your customer's experience from the moment they arrive.</b></p>
