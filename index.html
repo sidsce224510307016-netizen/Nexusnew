@@ -1065,7 +1065,7 @@
      SLIDE 1B: WHY WE EXIST — Insomnia Ultra Smooth
   ══════════════════════════════════════════════ */
 
-  /* Lenis body resets — essential for smooth scroll performance */
+  /* Lenis essential resets */
   html.lenis, html.lenis body { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -1078,118 +1078,122 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Fixed header — NO mix-blend-mode (GPU lag removed) ── */
+  /* Fixed header — height:300px matches reference; mix-blend-mode:exclusion for blending effect */
   .why-header-fixed {
     position: fixed;
     top: 0; left: 0;
     width: 100%;
-    height: 35vh;
-    z-index: 50;
+    height: 300px;
+    z-index: 100;
     display: flex;
     align-items: center;
     pointer-events: none;
     overflow: hidden;
+    mix-blend-mode: exclusion;
     opacity: 0;
     transition: opacity 0.5s ease;
   }
   .why-header-fixed.visible { opacity: 1; }
 
-  /* 3 copies in HTML → xPercent -66.66 travel */
+  /* marquee inner — GPU-accelerated */
   .why-marquee-inner {
     display: flex;
     white-space: nowrap;
-    will-change: transform; /* Forces GPU layer */
+    will-change: transform;
     flex-shrink: 0;
   }
   .why-marquee-inner h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 15vw;
-    font-weight: 900;
+    font-size: 14vw;
+    font-weight: 400;
     text-transform: uppercase;
     line-height: 1;
-    padding-right: 0.1em;
-    color: rgba(162, 123, 91, 0.85); /* semi-transparent — stops lag vs blend-mode */
+    padding-right: 0.2em;
+    letter-spacing: -2px;
+    color: #ffffff;
     flex-shrink: 0;
-    letter-spacing: -3px;
     user-select: none;
   }
 
-  /* Sub-label */
+  /* Sub-label — below header, top:280px matches reference */
   .why-sub-header {
     position: fixed;
-    top: 32vh; left: 5vw;
+    top: 280px; left: 5vw;
     font-family: 'Jost', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 6px;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    z-index: 51;
-    color: rgba(220,215,201,0.4);
+    z-index: 101;
+    color: var(--creme-brulee);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s ease;
   }
   .why-sub-header.visible { opacity: 1; }
 
-  /* Spacer pushes content below fixed header */
-  .why-content-wrap { padding-top: 40vh; }
-
-  /* ── Project section — exact reference layout ── */
-  .why-project-row {
-    display: flex;
-    min-height: 110vh;
-    padding: 0 5vw;
+  /* Content: padding-top:50vh pushes below the fixed header */
+  .why-content-wrap {
     position: relative;
-    align-items: center;
-    background: #0d0d0d;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    z-index: 1;
+    padding-top: 50vh;
   }
 
-  /* Side content — 30%, muted, brightens on hover */
+  /* Project row — justify-content:space-between, min-height:100vh */
+  .why-project-row {
+    display: flex;
+    padding: 15vh 5vw;
+    min-height: 100vh;
+    border-top: 1px solid rgba(210, 180, 140, 0.2);
+    justify-content: space-between;
+    background: #0d0d0d;
+    position: relative;
+  }
+
+  /* Side text — 30%, padding-top:20px */
   .why-side-text {
     width: 30%;
+    padding-top: 20px;
     opacity: 0.4;
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(14px, 1.5vw, 17px);
-    line-height: 1.7;
-    color: rgba(220,215,201,0.9);
+    line-height: 1.5;
+    color: rgba(255,255,255,0.9);
     transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    flex-shrink: 0;
-    padding-top: 10vh;
-    padding-right: 5vw;
     will-change: opacity, transform;
+    flex-shrink: 0;
   }
   .why-project-row:hover .why-side-text { opacity: 1; }
 
   .why-side-num {
     font-family: 'Jost', sans-serif;
-    font-size: 9px;
-    letter-spacing: 5px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
     color: var(--creme-brulee);
     display: block;
-    margin-bottom: 1.4rem;
+    margin-bottom: 20px;
     text-transform: uppercase;
   }
   .why-side-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(22px, 2.8vw, 42px);
-    font-weight: 700;
-    color: var(--au-lait);
-    line-height: 1.05;
-    margin: 0 0 1.4rem 0;
-    letter-spacing: -0.5px;
+    font-size: clamp(28px, 3rem, 48px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+    letter-spacing: -1px;
   }
   .why-side-desc {
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    max-width: 300px;
     font-size: clamp(13px, 1.3vw, 15px);
-    line-height: 1.8;
-    color: rgba(220,215,201,0.5);
     font-weight: 300;
   }
 
-  /* ── Image frame — 65%, height 75vh, img 130% for parallax ── */
+  /* Image container — 60%, height:70vh, img:130% for parallax travel */
   .why-img-box {
-    width: 65%;
-    height: 75vh;
-    margin-left: auto;
+    width: 60%;
+    height: 70vh;
     overflow: hidden;
     position: relative;
     background: #111;
@@ -1197,7 +1201,7 @@
   }
   .why-img-box img {
     width: 100%;
-    height: 130%; /* bilateral travel: -15% → +15% */
+    height: 130%;
     object-fit: cover;
     position: absolute;
     top: 0; left: 0;
@@ -1217,7 +1221,7 @@
     bottom: 40px; left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 15px;
+    gap: 10px;
     z-index: 200;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -1225,18 +1229,17 @@
   }
   .why-dot-nav.visible { opacity: 1; }
   .why-dot {
-    width: 12px; height: 12px;
-    border: 1px solid rgba(220,215,201,0.4);
+    width: 8px; height: 8px;
     border-radius: 50%;
-    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: background 0.3s, transform 0.3s;
   }
   .why-dot.active {
-    background: var(--au-lait);
-    border-color: var(--au-lait);
+    background: #fff;
     transform: scale(1.3);
   }
 
-  .why-end-spacer { height: 60vh; background: #0d0d0d; }
+  .why-end-spacer { height: 20vh; background: #0d0d0d; }
 
   /* Suppress all legacy why elements */
   .why-stage, .why-title, .why-img-grid,
@@ -1414,7 +1417,7 @@
 <!-- ══ SLIDE 1B: WHY WE EXIST — Insomnia Ultra Smooth ══ -->
 <section id="slide-why">
 
-  <!-- Fixed massive marquee — 3 copies, xPercent -66.66 travel -->
+  <!-- Fixed massive marquee: 3 copies, mix-blend-mode:exclusion -->
   <div class="why-header-fixed" id="why-header-fixed">
     <div class="why-marquee-inner" id="why-marquee-inner">
       <h1>WHY WE EXIST * RESTRO * </h1>
@@ -1424,38 +1427,38 @@
   </div>
 
   <!-- Fixed sub-label -->
-  <div class="why-sub-header" id="why-sub-header">Restro &nbsp;·&nbsp; 2026</div>
+  <div class="why-sub-header" id="why-sub-header">RESTRO — 2026</div>
 
-  <!-- Content -->
+  <!-- Content rows -->
   <div class="why-content-wrap">
 
-    <!-- Row 1 -->
+    <!-- Row 1: The Wait -->
     <section class="why-project-row" id="why-row-1">
       <div class="why-side-text" id="why-side-1">
         <span class="why-side-num">01 / The Wait</span>
         <h3 class="why-side-title">The Wait</h3>
-        <p class="why-side-desc">Customers leave not because they refuse to wait — but because they're left in the dark. Uncertainty is the real enemy of the dining experience.</p>
+        <p class="why-side-desc">Customers leave not because they refuse to wait — but because they're left in the dark. Uncertainty is the real friction of the dining experience.</p>
       </div>
       <div class="why-img-box">
         <div class="why-img-box-overlay"></div>
-        <img src="https://images.pexels.com/photos/3887985/pexels-photo-3887985.jpeg?auto=compress&cs=tinysrgb&w=1600" class="why-reveal-img" alt="The Wait" crossorigin="anonymous">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200" class="why-reveal-img" alt="The Wait" crossorigin="anonymous">
       </div>
     </section>
 
-    <!-- Row 2 -->
+    <!-- Row 2: The Moment -->
     <section class="why-project-row" id="why-row-2">
       <div class="why-side-text" id="why-side-2">
         <span class="why-side-num">02 / The Moment</span>
         <h3 class="why-side-title">The Moment</h3>
-        <p class="why-side-desc">Every second a guest stands idle is a missed connection. We transform the pre-table moment into the beginning of an extraordinary meal.</p>
+        <p class="why-side-desc">Every second a guest stands idle is a missed connection. Transform the pre-table moment into the beginning of an extraordinary meal.</p>
       </div>
       <div class="why-img-box">
         <div class="why-img-box-overlay"></div>
-        <img src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=1600" class="why-reveal-img" alt="The Moment" crossorigin="anonymous">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200" class="why-reveal-img" alt="The Moment" crossorigin="anonymous">
       </div>
     </section>
 
-    <!-- Row 3 -->
+    <!-- Row 3: The Experience -->
     <section class="why-project-row" id="why-row-3">
       <div class="why-side-text" id="why-side-3">
         <span class="why-side-num">03 / The Experience</span>
@@ -2194,24 +2197,20 @@
 
     if (!whySection || !marqueeInner) return;
 
-    /* ── 1. HIGH-PERFORMANCE LENIS SMOOTH SCROLL ──
-       Exact reference API: duration, easing fn, smoothWheel, wheelMultiplier.
-       Wired to GSAP ticker for frame-perfect sync — NO double-RAF.         */
+    /* ── 1. Lenis smooth scroll — exact reference API ──
+       duration:1.2, exponential easing, smoothWheel:true, wheelMultiplier:1
+       Single GSAP ticker drives Lenis — NO double requestAnimationFrame    */
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), /* exponential "heavy" feel */
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      wheelMultiplier: 1,
     });
 
-    /* Single GSAP ticker handles both Lenis + ScrollTrigger in one RAF */
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
     lenis.on('scroll', ScrollTrigger.update);
 
-    /* ── 2. Show / hide fixed elements when why section in view ── */
+    /* ── 2. Show / hide fixed elements when section enters view ── */
     ScrollTrigger.create({
       trigger: whySection,
       start: 'top 60%',
@@ -2222,26 +2221,26 @@
       onLeaveBack: () => { headerFixed.classList.remove('visible'); subHeader.classList.remove('visible'); dotNav.classList.remove('visible'); },
     });
 
-    /* ── 3. Marquee scroll — 3 copies → xPercent -66.66, scrub 0.8 ──
-       Exact reference: xPercent:-66.66 matches the 3 h1 items in HTML  */
+    /* ── 3. Marquee — xPercent:-50, scrub:0.5, tied to full page scroll ──
+       Reference uses xPercent:-50 for 3 copies with padding-right gap      */
     gsap.to(marqueeInner, {
-      xPercent: -66.66,
+      xPercent: -50,
       ease: 'none',
       scrollTrigger: {
         trigger: 'body',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.8, /* slight lag for heavy momentum feel */
+        scrub: 0.5,
       }
     });
 
-    /* ── 4. Image parallax reveal — bilateral y:-15%→+15%, scrub:true ──
-       Exact reference: fromTo y:"-15%" → y:"15%", scrub:true           */
+    /* ── 4. Image parallax — y:"-15%" → y:"5%", scrub:true ──
+       Exact reference fromTo values for the reveal transition             */
     whySection.querySelectorAll('.why-reveal-img').forEach(img => {
       gsap.fromTo(img,
         { y: '-15%' },
         {
-          y: '15%',
+          y: '5%',
           ease: 'none',
           scrollTrigger: {
             trigger: img.parentElement,
@@ -2253,22 +2252,23 @@
       );
     });
 
-    /* ── 5. Side text smooth fade-in ── */
+    /* ── 5. Side text — opacity:0.2→1, y:30→0, play/reverse on scroll ── */
     whySection.querySelectorAll('.why-side-text').forEach(text => {
       gsap.from(text, {
-        opacity: 0,
-        x: -24,
-        duration: 1.2,
+        opacity: 0.2,
+        y: 30,
+        duration: 1,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: text,
           start: 'top 80%',
-          toggleActions: 'play none none reverse',
+          end: 'top 20%',
+          toggleActions: 'play reverse play reverse',
         }
       });
     });
 
-    /* ── 6. Active dot tracks active row ── */
+    /* ── 6. Active dot nav tracks current row ── */
     rows.forEach((row, i) => {
       if (!row) return;
       ScrollTrigger.create({
