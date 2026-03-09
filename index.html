@@ -1955,43 +1955,6 @@
     }
   });
 
-  // Brand overlay fades out on scroll
-  gsap.to('#hero-brand-overlay', {
-    opacity: 0,
-    y: -30,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#slide1',
-      start: 'top top',
-      end: '40% top',
-      scrub: 1
-    }
-  });
-
-  // Hero content fades out on scroll
-  gsap.to('#hero-title', {
-    opacity: 0,
-    y: -20,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#slide1',
-      start: '20% top',
-      end: '60% top',
-      scrub: 1
-    }
-  });
-  gsap.to('#hero-btn', {
-    opacity: 0,
-    y: 10,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#slide1',
-      start: '25% top',
-      end: '55% top',
-      scrub: 1
-    }
-  });
-
   // Scroll-down class for CSS hover zoom toggle
   ScrollTrigger.create({
     trigger: '#slide1',
