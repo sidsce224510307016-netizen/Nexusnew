@@ -491,24 +491,182 @@
   .shift-line { width: 48px; height: 1px; background: var(--navy); opacity: 0.3; margin: 12px 0; }
   .shift-subtitle { font-size: 10px; letter-spacing: 4px; color: var(--navy); opacity: 0.6; margin-bottom: 48px; }
 
+  /* ── MASK EXPAND — replaces old flow-diagram / flow-circle ── */
   .flow-diagram {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 0; padding: 0 32px; margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    margin-bottom: 48px;
+    width: 100%;
   }
 
-  .flow-circle {
-    width: 130px; height: 130px; border-radius: 50%;
-    background: rgba(255,255,255,0.7);
-    border: 1px solid rgba(28,49,99,0.12);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; letter-spacing: 3px; color: var(--navy);
+  /* Keep legacy selectors harmless (GSAP still refs them) */
+  .flow-circle { display: none; }
+  .flow-dash   { display: none; }
+
+  /* ── Mask item wrapper ── */
+  .mask-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-top: 1px solid rgba(44,54,57,0.15);
+    /* collapsed height — just the header bar */
+    height: 64px;
+    transition: height 0.62s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: height;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+
+  .mask-item:last-child {
+    border-bottom: 1px solid rgba(44,54,57,0.15);
+  }
+
+  /* Expanded state */
+  .mask-item.mask-open {
+    height: 220px;
+  }
+
+  /* Clip-path mask — starts clipped to top strip, expands to reveal all */
+  .mask-item-inner {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.62s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: clip-path;
+    pointer-events: none;
+  }
+
+  .mask-item.mask-open .mask-item-inner {
+    clip-path: inset(0 0 0% 0);
+  }
+
+  /* ── Header row (always visible) ── */
+  .mask-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .mask-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .mask-number {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--creme-brulee);
+    font-family: 'Jost', sans-serif;
     font-weight: 500;
+    min-width: 24px;
   }
 
-  .flow-dash {
-    width: 1px; height: 60px;
-    border-left: 1px dashed rgba(28,49,99,0.3);
+  .mask-label {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
   }
+
+  .mask-arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(44,54,57,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy);
+    font-size: 14px;
+    transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1),
+                background 0.3s ease,
+                border-color 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .mask-item.mask-open .mask-arrow {
+    transform: rotate(45deg);
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--cream);
+  }
+
+  /* ── Expanded reveal content (lives inside .mask-item-inner) ── */
+  .mask-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 20px 20px;
+    gap: 20px;
+  }
+
+  /* Left: big step icon / badge */
+  .mask-badge {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 24px;
+  }
+
+  /* Right: text block */
+  .mask-text-block {
+    flex: 1;
+  }
+
+  .mask-step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 400; font-style: italic;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .mask-step-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; line-height: 1.55;
+    color: rgba(44,54,57,0.75);
+  }
+
+  /* Coloured fill that reveals with the clip-path */
+  .mask-fill {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    transition: opacity 0.4s ease;
+  }
+  .mask-item.mask-open .mask-fill { opacity: 0.13; }
+
+  .mask-fill-1 { background: var(--creme-brulee); }
+  .mask-fill-2 { background: var(--sage); }
+  .mask-fill-3 { background: var(--navy); }
+
+  /* Progress line beneath header — animates width on open */
+  .mask-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--creme-brulee);
+    transition: width 0.62s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 3;
+  }
+  .mask-item.mask-open .mask-progress { width: 100%; }
 
   .shift-desc {
     font-family: 'Cormorant Garamond', serif;
@@ -2306,13 +2464,84 @@
     <div class="shift-line" id="shift-line"></div>
     <p class="shift-subtitle" id="shift-subtitle">INNOVATIVE STRATEGY</p>
 
+    <!-- ── MASK EXPAND DIAGRAM ── -->
     <div class="flow-diagram" id="flow-diagram">
-      <div class="flow-circle" id="flow-c1">CAPTURE</div>
-      <div class="flow-dash" id="flow-d1"></div>
-      <div class="flow-circle" id="flow-c2">SCHEDULE</div>
-      <div class="flow-dash" id="flow-d2"></div>
-      <div class="flow-circle" id="flow-c3">BALANCE</div>
-    </div>
+
+      <!-- MASK 1: CAPTURE -->
+      <div class="mask-item" id="flow-c1" role="button" tabindex="0" aria-expanded="false" aria-label="Capture — click to expand">
+        <div class="mask-fill mask-fill-1"></div>
+        <div class="mask-progress"></div>
+
+        <!-- Always-visible header -->
+        <div class="mask-header">
+          <div class="mask-header-left">
+            <span class="mask-number">01</span>
+            <span class="mask-label">Capture</span>
+          </div>
+          <div class="mask-arrow">+</div>
+        </div>
+
+        <!-- Clip-path revealed content -->
+        <div class="mask-item-inner">
+          <div class="mask-content">
+            <div class="mask-badge">🎯</div>
+            <div class="mask-text-block">
+              <div class="mask-step-title">Capture Every Guest</div>
+              <div class="mask-step-desc">The moment a guest arrives, Restro captures their intent — walk-in, pre-order, or reservation — turning every arrival into a data point that optimises your floor in real time.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MASK 2: SCHEDULE -->
+      <div class="mask-item" id="flow-c2" role="button" tabindex="0" aria-expanded="false" aria-label="Schedule — click to expand">
+        <div class="mask-fill mask-fill-2"></div>
+        <div class="mask-progress"></div>
+
+        <div class="mask-header">
+          <div class="mask-header-left">
+            <span class="mask-number">02</span>
+            <span class="mask-label">Schedule</span>
+          </div>
+          <div class="mask-arrow">+</div>
+        </div>
+
+        <div class="mask-item-inner">
+          <div class="mask-content">
+            <div class="mask-badge">📅</div>
+            <div class="mask-text-block">
+              <div class="mask-step-title">Intelligent Sequencing</div>
+              <div class="mask-step-desc">AI sequences each table turn with surgical precision — predicting wait times, communicating them to guests, and keeping your kitchen perfectly in sync with demand.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MASK 3: BALANCE -->
+      <div class="mask-item" id="flow-c3" role="button" tabindex="0" aria-expanded="false" aria-label="Balance — click to expand">
+        <div class="mask-fill mask-fill-3"></div>
+        <div class="mask-progress"></div>
+
+        <div class="mask-header">
+          <div class="mask-header-left">
+            <span class="mask-number">03</span>
+            <span class="mask-label">Balance</span>
+          </div>
+          <div class="mask-arrow">+</div>
+        </div>
+
+        <div class="mask-item-inner">
+          <div class="mask-content">
+            <div class="mask-badge">⚖️</div>
+            <div class="mask-text-block">
+              <div class="mask-step-title">Perfect Equilibrium</div>
+              <div class="mask-step-desc">Revenue, satisfaction and staff energy stay in balance. Restro absorbs peak-hour chaos so your team can deliver the unhurried, attentive service your brand deserves.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.flow-diagram -->
 
     <p class="shift-desc" id="shift-desc"><b>THE BETTER THE CUSTOMER FEELS, THE BETTER YOUR OUTLET BECOMES.</b></p>
   </div>
@@ -3089,7 +3318,9 @@
   gsap.to('#orb-s2-2', { y: 50, ease: 'none', scrollTrigger: { trigger: '#slide2', scrub: 2, start: 'top bottom', end: 'bottom top' } });
 
   /* ══════════════════════════════════════════════
-     SLIDE 3: THE SHIFT — PINNED flow circle assembly
+     SLIDE 3: THE SHIFT — MASK EXPAND INTERACTION
+     Replaces the old flow-circle assembly animation.
+     Title / line / subtitle entry + orb parallax kept identical.
   ══════════════════════════════════════════════ */
 
   gsap.from('#shift-title', {
@@ -3105,24 +3336,68 @@
     scrollTrigger: { trigger: '#slide3', start: 'top 76%', toggleActions: 'play none none none' }
   });
 
-  // Flow circles assemble: start scattered, converge into place
-  const flowAssemble = gsap.timeline({
+  /* Mask items stagger-fade in on scroll entry */
+  gsap.from('.mask-item', {
+    opacity: 0, y: 32, duration: 0.7, ease: 'power3.out',
+    stagger: { each: 0.14, from: 'start' },
     scrollTrigger: { trigger: '#flow-diagram', start: 'top 82%', toggleActions: 'play none none none' }
   });
-  flowAssemble
-    .from('#flow-c1', { opacity: 0, x: -80, scale: 0.6, duration: 0.8, ease: 'back.out(1.4)' })
-    .from('#flow-d1', { opacity: 0, scaleY: 0, transformOrigin: 'top center', duration: 0.4 }, '-=0.2')
-    .from('#flow-c2', { opacity: 0, x: 80, scale: 0.6, duration: 0.8, ease: 'back.out(1.4)' }, '-=0.3')
-    .from('#flow-d2', { opacity: 0, scaleY: 0, transformOrigin: 'top center', duration: 0.4 }, '-=0.2')
-    .from('#flow-c3', { opacity: 0, y: 60, scale: 0.6, duration: 0.8, ease: 'back.out(1.4)' }, '-=0.3');
 
   gsap.from('#shift-desc', {
     opacity: 0, y: 30, duration: 0.9,
     scrollTrigger: { trigger: '#shift-desc', start: 'top 88%', toggleActions: 'play none none none' }
   });
 
-  // Scrub-based parallax on the orb
+  /* Orb parallax — unchanged */
   gsap.to('#orb-s3-1', { y: -70, ease: 'none', scrollTrigger: { trigger: '#slide3', scrub: 1.8, start: 'top bottom', end: 'bottom top' } });
+
+  /* ── MASK EXPAND CLICK LOGIC ── */
+  (function() {
+    const items = Array.from(document.querySelectorAll('.mask-item'));
+    let activeItem = null;
+
+    function openItem(item) {
+      item.classList.add('mask-open');
+      item.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeItem(item) {
+      item.classList.remove('mask-open');
+      item.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleItem(item) {
+      const isOpen = item.classList.contains('mask-open');
+
+      /* Always collapse the currently open one */
+      if (activeItem && activeItem !== item) {
+        closeItem(activeItem);
+        activeItem = null;
+      }
+
+      if (isOpen) {
+        /* Clicking the open one collapses it */
+        closeItem(item);
+        activeItem = null;
+      } else {
+        openItem(item);
+        activeItem = item;
+      }
+    }
+
+    items.forEach(item => {
+      /* Mouse click */
+      item.addEventListener('click', () => toggleItem(item));
+
+      /* Keyboard: Enter / Space */
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleItem(item);
+        }
+      });
+    });
+  })();
 
   /* ══════════════════════════════════════════════
      SLIDE 4: HOW IT WORKS
