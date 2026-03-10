@@ -1802,9 +1802,297 @@
   .blend-1-why, .blend-why-2, .blend-2-3, .blend-3-4,
   .blend-4-5, .blend-5-6, .blend-6-7, .blend-7-8,
   .blend-8-9, .blend-9-10 { background: transparent !important; }
+
+  /* ══════════════════════════════════════════════
+     STAGGERED SIDE MENU — ported from React component
+  ══════════════════════════════════════════════ */
+
+  /* Overlay backdrop */
+  #sm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 39;
+    background: transparent;
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+  #sm-backdrop.sm-open {
+    pointer-events: auto;
+  }
+
+  /* Pre-layer sliding strips */
+  #sm-prelayers {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: clamp(260px, 38vw, 420px);
+    pointer-events: none;
+    z-index: 45;
+    overflow: hidden;
+  }
+
+  .sm-prelayer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    will-change: transform;
+  }
+
+  /* Main panel */
+  #sm-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: clamp(260px, 38vw, 420px);
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 6em 2em 2em 2em;
+    overflow-y: auto;
+    z-index: 50;
+    pointer-events: auto;
+    will-change: transform;
+  }
+
+  /* Panel inner layout */
+  .sm-panel-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Nav list */
+  .sm-panel-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    counter-reset: smItem;
+  }
+
+  .sm-panel-itemWrap {
+    position: relative;
+    overflow: hidden;
+    line-height: 1;
+  }
+
+  .sm-panel-item {
+    position: relative;
+    color: #000;
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    cursor: pointer;
+    line-height: 1;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-decoration: none;
+    padding-right: 1.4em;
+    font-family: 'Jost', sans-serif;
+    transition: color 0.25s;
+  }
+
+  .sm-panel-item::after {
+    counter-increment: smItem;
+    content: counter(smItem, decimal-leading-zero);
+    position: absolute;
+    top: 0.1em;
+    right: 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #A27B5B;
+    letter-spacing: 0;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sm-panel-list.nums-visible .sm-panel-item::after {
+    opacity: 1;
+  }
+
+  .sm-panel-item:hover {
+    color: #A27B5B;
+  }
+
+  .sm-panel-itemLabel {
+    display: inline-block;
+    will-change: transform;
+    transform-origin: 50% 100%;
+  }
+
+  /* Socials */
+  .sm-socials {
+    margin-top: auto;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sm-socials-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #A27B5B;
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .sm-socials-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .sm-socials-link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #111;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    transition: color 0.25s, opacity 0.25s;
+  }
+
+  .sm-socials-link:hover {
+    color: #A27B5B;
+  }
+
+  .sm-socials-list:hover .sm-socials-link:not(:hover) {
+    opacity: 0.35;
+  }
+
+  /* Hamburger — update to icon-style for open/close */
+  .hamburger {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+  }
+
+  .hamburger-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    flex-shrink: 0;
+  }
+
+  .hamburger-line {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+  }
+
+  /* Text toggle wrap */
+  .hamburger-text {
+    position: relative;
+    display: inline-block;
+    height: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .hamburger-text-inner {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    will-change: transform;
+  }
+  .hamburger-text-line {
+    display: block;
+    height: 1em;
+    line-height: 1;
+  }
+
+  /* On mobile, panel goes full width */
+  @media (max-width: 768px) {
+    #sm-panel,
+    #sm-prelayers {
+      width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
+<!-- ══ STAGGERED SIDE MENU ══ -->
+<div id="sm-backdrop" aria-hidden="true"></div>
+
+<!-- Pre-layer colour strips (slide in before the panel) -->
+<div id="sm-prelayers" aria-hidden="true">
+  <div class="sm-prelayer" id="sm-prelayer-0" style="background:#B19EEF;"></div>
+  <div class="sm-prelayer" id="sm-prelayer-1" style="background:#5227FF;"></div>
+</div>
+
+<!-- Main navigation panel -->
+<aside id="sm-panel" aria-label="Site navigation" aria-hidden="true">
+  <div class="sm-panel-inner">
+    <ul class="sm-panel-list" id="sm-panel-list" role="list">
+      <li class="sm-panel-itemWrap">
+        <a class="sm-panel-item" href="#slide1" aria-label="Go to home">
+          <span class="sm-panel-itemLabel">Home</span>
+        </a>
+      </li>
+      <li class="sm-panel-itemWrap">
+        <a class="sm-panel-item" href="#slide2" aria-label="Learn about the problem we solve">
+          <span class="sm-panel-itemLabel">Problem</span>
+        </a>
+      </li>
+      <li class="sm-panel-itemWrap">
+        <a class="sm-panel-item" href="#slide5" aria-label="See our pillars of value">
+          <span class="sm-panel-itemLabel">Pillars</span>
+        </a>
+      </li>
+      <li class="sm-panel-itemWrap">
+        <a class="sm-panel-item" href="#slide9" aria-label="View scalability">
+          <span class="sm-panel-itemLabel">Scale</span>
+        </a>
+      </li>
+      <li class="sm-panel-itemWrap">
+        <a class="sm-panel-item" href="#slide10" aria-label="Book a demo">
+          <span class="sm-panel-itemLabel">Demo</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sm-socials" aria-label="Social links">
+      <h3 class="sm-socials-title" id="sm-socials-title">Socials</h3>
+      <ul class="sm-socials-list" role="list">
+        <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="sm-socials-link">Twitter</a></li>
+        <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="sm-socials-link">Instagram</a></li>
+        <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="sm-socials-link">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+<!-- ══ END STAGGERED SIDE MENU ══ -->
 <div id="universal-bg"></div>
 <div id="scroll-progress"></div>
 
@@ -1844,7 +2132,18 @@
       <span class="fork-icon">🍴</span>
       <span>RESTRO</span>
     </div>
-    <button class="hamburger">☰</button>
+    <button class="hamburger" id="sm-toggle-btn" aria-label="Open menu" aria-expanded="false" aria-controls="sm-panel" type="button">
+      <span class="hamburger-text" aria-hidden="true">
+        <span class="hamburger-text-inner" id="sm-text-inner">
+          <span class="hamburger-text-line">Menu</span>
+          <span class="hamburger-text-line">Close</span>
+        </span>
+      </span>
+      <span class="hamburger-icon" id="sm-icon" aria-hidden="true">
+        <span class="hamburger-line" id="sm-line-h"></span>
+        <span class="hamburger-line" id="sm-line-v"></span>
+      </span>
+    </button>
   </nav>
 
   <!-- Centered content: RESTRO title + tagline + glass button stacked -->
@@ -3408,6 +3707,226 @@ void main() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(doRefresh, 300);
   });
+
+  /* ══════════════════════════════════════════════
+     STAGGERED SIDE MENU — vanilla JS port
+  ══════════════════════════════════════════════ */
+  (function() {
+
+    /* ── DOM refs ── */
+    const toggleBtn   = document.getElementById('sm-toggle-btn');
+    const panel       = document.getElementById('sm-panel');
+    const backdrop    = document.getElementById('sm-backdrop');
+    const prelayers   = Array.from(document.querySelectorAll('.sm-prelayer'));
+    const icon        = document.getElementById('sm-icon');
+    const lineH       = document.getElementById('sm-line-h');
+    const lineV       = document.getElementById('sm-line-v');
+    const textInner   = document.getElementById('sm-text-inner');
+    const panelList   = document.getElementById('sm-panel-list');
+    const socialsTitle = document.getElementById('sm-socials-title');
+    const socialLinks = Array.from(document.querySelectorAll('#sm-panel .sm-socials-link'));
+    const itemLabels  = Array.from(document.querySelectorAll('#sm-panel .sm-panel-itemLabel'));
+
+    if (!toggleBtn || !panel) return;
+
+    /* ── State ── */
+    let isOpen   = false;
+    let isBusy   = false;
+    let openTl   = null;
+    let closeTl  = null;
+    let spinTl   = null;
+    let textTl   = null;
+
+    /* ── Initial off-screen setup ── */
+    gsap.set([panel, ...prelayers], { xPercent: 100 });
+    gsap.set(lineH, { transformOrigin: '50% 50%', rotate: 0 });
+    gsap.set(lineV, { transformOrigin: '50% 50%', rotate: 90 });
+    gsap.set(icon,  { rotate: 0, transformOrigin: '50% 50%' });
+    gsap.set(textInner, { yPercent: 0 });
+
+    if (itemLabels.length) {
+      gsap.set(itemLabels, { yPercent: 140, rotate: 10 });
+    }
+    if (socialsTitle) gsap.set(socialsTitle, { opacity: 0 });
+    if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
+
+    /* ── Build open timeline ── */
+    function buildOpenTimeline() {
+      openTl?.kill();
+      closeTl?.kill();
+
+      if (itemLabels.length) gsap.set(itemLabels, { yPercent: 140, rotate: 10 });
+      if (socialsTitle)      gsap.set(socialsTitle, { opacity: 0 });
+      if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
+
+      const tl = gsap.timeline({
+        paused: true,
+        onComplete: () => { isBusy = false; }
+      });
+
+      /* Pre-layers stagger in */
+      prelayers.forEach((layer, i) => {
+        const start = Number(gsap.getProperty(layer, 'xPercent'));
+        tl.fromTo(layer, { xPercent: start }, { xPercent: 0, duration: 0.5, ease: 'power4.out' }, i * 0.07);
+      });
+
+      /* Panel slides in after last pre-layer */
+      const panelStart = prelayers.length ? (prelayers.length - 1) * 0.07 + 0.08 : 0;
+      const panelDuration = 0.65;
+      const panelCurrentX = Number(gsap.getProperty(panel, 'xPercent'));
+      tl.fromTo(panel,
+        { xPercent: panelCurrentX },
+        { xPercent: 0, duration: panelDuration, ease: 'power4.out' },
+        panelStart
+      );
+
+      /* Menu item labels cascade in */
+      if (itemLabels.length) {
+        const itemsStart = panelStart + panelDuration * 0.15;
+        tl.to(itemLabels, {
+          yPercent: 0,
+          rotate: 0,
+          duration: 1,
+          ease: 'power4.out',
+          stagger: { each: 0.1, from: 'start' }
+        }, itemsStart);
+      }
+
+      /* Numbering counter fade in */
+      const itemEls = Array.from(panel.querySelectorAll('.sm-panel-item'));
+      if (itemEls.length) {
+        tl.to({}, { duration: 0.01,
+          onStart: () => { panelList && panelList.classList.add('nums-visible'); }
+        }, panelStart + panelDuration * 0.25);
+      }
+
+      /* Socials animate in */
+      const socialsStart = panelStart + panelDuration * 0.4;
+      if (socialsTitle) {
+        tl.to(socialsTitle, { opacity: 1, duration: 0.5, ease: 'power2.out' }, socialsStart);
+      }
+      if (socialLinks.length) {
+        tl.to(socialLinks, {
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          ease: 'power3.out',
+          stagger: { each: 0.08 },
+          onComplete: () => { gsap.set(socialLinks, { clearProps: 'opacity' }); }
+        }, socialsStart + 0.04);
+      }
+
+      return tl;
+    }
+
+    /* ── Play open ── */
+    function playOpen() {
+      if (isBusy) return;
+      isBusy = true;
+      openTl = buildOpenTimeline();
+      openTl.play(0);
+    }
+
+    /* ── Play close ── */
+    function playClose() {
+      openTl?.kill();
+      openTl = null;
+      closeTl?.kill();
+
+      /* Reset numbering immediately */
+      panelList && panelList.classList.remove('nums-visible');
+
+      const all = [...prelayers, panel];
+      closeTl = gsap.to(all, {
+        xPercent: 100,
+        duration: 0.32,
+        ease: 'power3.in',
+        overwrite: 'auto',
+        onComplete: () => {
+          if (itemLabels.length) gsap.set(itemLabels, { yPercent: 140, rotate: 10 });
+          if (socialsTitle)      gsap.set(socialsTitle, { opacity: 0 });
+          if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
+          isBusy = false;
+        }
+      });
+    }
+
+    /* ── Animate icon (plus → × on open) ── */
+    function animateIcon(opening) {
+      spinTl?.kill();
+      if (opening) {
+        spinTl = gsap.to(icon, { rotate: 225, duration: 0.8, ease: 'power4.out', overwrite: 'auto' });
+      } else {
+        spinTl = gsap.to(icon, { rotate: 0, duration: 0.35, ease: 'power3.inOut', overwrite: 'auto' });
+      }
+    }
+
+    /* ── Animate text (Menu ↔ Close cycling) ── */
+    function animateText(opening) {
+      textTl?.kill();
+      /* Build a small cycle sequence and animate yPercent */
+      const lines = textInner.querySelectorAll('.hamburger-text-line');
+      const lineCount = lines.length;
+      /* With 2 lines (Menu / Close): toggle between yPercent 0 and -50 */
+      const targetYPercent = opening ? -50 : 0;
+      textTl = gsap.to(textInner, {
+        yPercent: targetYPercent,
+        duration: 0.4,
+        ease: 'power4.out'
+      });
+    }
+
+    /* ── Toggle ── */
+    function toggleMenu() {
+      isOpen = !isOpen;
+
+      /* Update ARIA + label */
+      toggleBtn.setAttribute('aria-expanded', isOpen);
+      toggleBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      panel.setAttribute('aria-hidden', !isOpen);
+      backdrop.classList.toggle('sm-open', isOpen);
+
+      if (isOpen) {
+        playOpen();
+      } else {
+        playClose();
+      }
+      animateIcon(isOpen);
+      animateText(isOpen);
+    }
+
+    /* ── Close menu ── */
+    function closeMenu() {
+      if (!isOpen) return;
+      isOpen = false;
+      toggleBtn.setAttribute('aria-expanded', false);
+      toggleBtn.setAttribute('aria-label', 'Open menu');
+      panel.setAttribute('aria-hidden', true);
+      backdrop.classList.remove('sm-open');
+      playClose();
+      animateIcon(false);
+      animateText(false);
+    }
+
+    /* ── Wire up events ── */
+    toggleBtn.addEventListener('click', toggleMenu);
+
+    /* Close on backdrop click */
+    backdrop.addEventListener('click', closeMenu);
+
+    /* Close when a nav link is clicked */
+    panel.querySelectorAll('.sm-panel-item').forEach(link => {
+      link.addEventListener('click', () => {
+        setTimeout(closeMenu, 120); /* short delay for smooth feel */
+      });
+    });
+
+    /* Escape key closes */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) closeMenu();
+    });
+
+  })();
 
 </script>
 </body>
