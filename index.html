@@ -626,6 +626,8 @@
   .dc-phone-wrapper {
     position: relative; display: flex; justify-content: center;
     margin-top: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 
   .dc-features-left {
@@ -1245,79 +1247,542 @@
   .why-spacer-end { display: none !important; }
 
 
-  /* ── MOBILE RESPONSIVE ── */
-  /* All px font sizes scale with viewport width on small screens */
-  @media (max-width: 480px) {
-    .hero-title { font-size: clamp(22.4px, 6.3vw, 33.6px); }
-    .btn-primary { font-size: 11px; padding: 16px 36px; letter-spacing: 2px; }
-    .hero-content { padding: 36px 20px 28px; }
-    .hero-tagline { font-size: clamp(16px, 4.5vw, 20px); padding: 32px 20px; }
-    .hero-card { margin: 24px 16px 0; }
-    .restaurant-img { height: clamp(180px, 50vw, 260px); }
+  /* ══════════════════════════════════════════════
+     COMPREHENSIVE RESPONSIVE SYSTEM
+     Mobile-first: 320px → Tablet: 768px → Desktop: 1024px+
+  ══════════════════════════════════════════════ */
 
-    .problem-title { font-size: clamp(30px, 9vw, 42px); }
-    .problem-text { font-size: clamp(16px, 5vw, 22px); }
-    .compare-label { font-size: clamp(16px, 5vw, 22px); }
-    .slide-body { padding: 24px 16px; }
+  /* ── TABLET & BELOW (≤ 1024px) ── */
+  @media (max-width: 1024px) {
+    /* WHY section: stack rows on tablet */
+    .why-project-row {
+      flex-direction: column;
+      padding: 10vh 5vw;
+      gap: 40px;
+    }
+    .why-side-text {
+      width: 100%;
+    }
+    .why-img-box {
+      width: 100%;
+      height: 50vh;
+    }
+    .why-marquee-inner h1 {
+      font-size: 10vw;
+    }
 
-    .shift-title { font-size: clamp(30px, 9vw, 40px); }
-    .flow-circle { width: clamp(90px, 28vw, 130px); height: clamp(90px, 28vw, 130px); font-size: 9px; }
-    .shift-desc { font-size: clamp(14px, 4vw, 17px); }
-    .shift-body { padding: 24px 16px; }
+    /* HIW slide: adapt card widths */
+    #hiw-drag-area {
+      padding: 0 10vw !important;
+    }
+    .hiw-card > div {
+      width: 75vw !important;
+    }
 
-    .hiw-title { font-size: clamp(32px, 9vw, 44px); }
-    .step-num { font-size: clamp(52px, 18vw, 80px); }
-    .step-desc { font-size: clamp(13px, 3.8vw, 15px); }
-    .hiw-body { padding: 20px 16px 0; }
+    /* Comparison table: slightly smaller cells */
+    .comp-table th, .comp-table td {
+      padding: 14px 10px;
+      font-size: 12px;
+    }
+    .comp-table td.feature-col {
+      font-size: 12px;
+    }
 
-    .pillars-title { font-size: clamp(26px, 7.5vw, 36px); }
-    .pillar-name { font-size: clamp(16px, 5vw, 20px); }
-    .pillar-text { font-size: 10px; }
-    .pillar-number { font-size: clamp(20px, 6vw, 26px); }
-    .pillar-cards { gap: 6px; }
-    .pillar-card { padding: 12px 8px; }
-    .pillars-body { padding: 12px 16px; }
-
-    .dc-title { font-size: clamp(24px, 7.5vw, 34px); }
-    .dc-phone-mockup { width: clamp(150px, 45vw, 200px); height: clamp(280px, 85vw, 380px); }
-    .dc-features-left { left: -4px; gap: 60px; }
-    .dc-feature { font-size: 8px; }
-    .dc-body { padding: 16px 16px 0; }
-
-    .quote-text { font-size: clamp(18px, 5.5vw, 24px); }
-    .receipt-card { padding: 32px 20px 40px; }
-
-    .comp-heading { font-size: clamp(26px, 8vw, 36px); }
-    .comp-table th, .comp-table td { padding: 14px 6px; font-size: clamp(10px, 3vw, 13px); }
-    .comp-body { padding: 24px 16px; }
-
-    .scale-title { font-size: clamp(32px, 9vw, 44px); }
-    .scale-desc { font-size: clamp(14px, 4vw, 17px); }
-    .scale-body { padding: 16px; }
-    .growth-roi { font-size: clamp(20px, 6vw, 26px); }
-
-    .cta-logo { font-size: clamp(40px, 13vw, 60px); }
-    .cta-btn { font-size: clamp(14px, 4vw, 17px); padding: 18px clamp(40px, 15vw, 80px); }
-
-    .nav1 { padding: 16px 16px; }
-    .slide-nav, .shift-nav, .hiw-nav, .pillars-nav, .dc-nav,
-    .testi-nav, .comp-nav, .scale-nav { padding: 14px 16px; }
-    .bottom-nav { padding: 14px 16px 20px; }
-    .bottom-nav-item { font-size: 8px; letter-spacing: 1px; }
-    .pillars-tabs { padding: 12px 16px; }
-    .dc-bottom { padding: 12px 16px 20px; }
-    .testi-bottom-nav { padding: 12px 16px 20px; }
-    .comp-bottom-tabs { padding: 12px 16px 20px; }
-    .scale-bottom { padding: 16px 16px 24px; }
-    .shift-bottom { padding: 16px 16px 24px; }
+    /* CTA form: limit width on larger tablets */
+    #cta-form-wrap {
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+    }
   }
 
+  /* ── MOBILE (≤ 768px) ── */
+  @media (max-width: 768px) {
+
+    /* ─ GLOBAL ─ */
+    .slide {
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+
+    /* ─ HERO (slide1) ─ */
+    .nav1 {
+      padding: 14px 16px;
+    }
+    .nav-logo {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+    }
+    .hero-brand-overlay {
+      font-size: clamp(56px, 18vw, 110px);
+      letter-spacing: 4px;
+      margin-bottom: 32px;
+    }
+    .hero-content {
+      padding: 70px 20px 36px;
+      gap: 0;
+    }
+    .hero-title {
+      font-size: clamp(18px, 5.5vw, 26px);
+      margin-bottom: 36px;
+    }
+    .btn-primary {
+      font-size: 11px;
+      padding: 15px 32px;
+      letter-spacing: 2px;
+    }
+    .hero-scroll-indicator {
+      bottom: 20px;
+    }
+
+    /* ─ WHY WE EXIST (slide-why) ─ */
+    .why-header-fixed {
+      height: 200px;
+    }
+    .why-marquee-inner h1 {
+      font-size: 13vw;
+    }
+    .why-sub-header {
+      top: 200px;
+      font-size: 0.7rem;
+    }
+    .why-project-row {
+      flex-direction: column;
+      padding: 8vh 5vw;
+      gap: 28px;
+      min-height: auto;
+    }
+    .why-side-text {
+      width: 100%;
+      opacity: 1;
+    }
+    .why-side-title {
+      font-size: clamp(24px, 7vw, 40px);
+    }
+    .why-side-desc {
+      font-size: clamp(13px, 3.5vw, 15px);
+      max-width: 100%;
+    }
+    .why-img-box {
+      width: 100%;
+      height: 40vw;
+      min-height: 200px;
+    }
+    .why-end-spacer {
+      height: 10vh;
+    }
+
+    /* ─ SLIDE 2: PROBLEM ─ */
+    .slide-body {
+      padding: 24px 16px;
+    }
+    .problem-title {
+      font-size: clamp(28px, 8.5vw, 42px);
+    }
+    .problem-subtitle {
+      font-size: 9px;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+    .problem-text {
+      font-size: clamp(15px, 4.5vw, 20px);
+      padding: 16px 0;
+    }
+    .diagram-card {
+      padding: 16px;
+    }
+    .chaos-svg {
+      height: 110px;
+    }
+    .precision-svg {
+      height: 80px;
+    }
+    .compare-label {
+      font-size: clamp(15px, 4.5vw, 22px);
+    }
+    .compare-row {
+      padding: 12px 0;
+    }
+
+    /* ─ SLIDE 3: THE SHIFT ─ */
+    .shift-body {
+      padding: 24px 16px;
+    }
+    .shift-title {
+      font-size: clamp(28px, 8.5vw, 40px);
+    }
+    .shift-desc {
+      font-size: clamp(14px, 4vw, 17px);
+      margin-bottom: 32px;
+    }
+    .flow-diagram {
+      padding: 0 16px;
+      margin-bottom: 32px;
+    }
+    .flow-circle {
+      width: clamp(88px, 26vw, 120px);
+      height: clamp(88px, 26vw, 120px);
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+    .flow-dash {
+      height: 40px;
+    }
+    .shift-bottom {
+      padding: 16px 16px 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ─ SLIDE 4: HOW IT WORKS ─ */
+    #slide4 {
+      height: 100svh !important;
+    }
+    #hiw-drag-area {
+      padding: 0 5vw !important;
+    }
+    .hiw-card > div {
+      width: 88vw !important;
+    }
+    /* Slide title font on narrow screens */
+    #hiw-titles [style*="font-size:6vw"] {
+      font-size: clamp(28px, 8vw, 44px) !important;
+    }
+    #hiw-titles [style*="clamp(14px,2.2vw,19px)"] {
+      font-size: clamp(13px, 3.8vw, 16px) !important;
+    }
+
+    /* ─ SLIDE 5: PILLARS ─ */
+    .pillars-body {
+      padding: 16px 16px;
+    }
+    .pillars-title {
+      font-size: clamp(24px, 7vw, 36px);
+    }
+    .pillar-cards {
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .pillar-card {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 12px;
+    }
+    .pillar-icon {
+      font-size: 20px;
+      margin-bottom: 0;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .pillar-name {
+      font-size: clamp(15px, 4.5vw, 20px);
+      margin-bottom: 6px;
+    }
+    .pillar-text {
+      font-size: 11px;
+    }
+    .pillar-metric {
+      margin-top: 12px;
+      padding-top: 8px;
+    }
+    .pillar-number {
+      font-size: clamp(16px, 5vw, 22px);
+    }
+    .pillars-tabs {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ─ SLIDE 6: DIGITAL CONNOISSEUR ─ */
+    .dc-body {
+      padding: 16px 16px 0;
+    }
+    .dc-title {
+      font-size: clamp(22px, 7vw, 32px);
+      margin-bottom: 8px;
+    }
+    .dc-phone-wrapper {
+      margin-top: 20px;
+      justify-content: center;
+      position: relative;
+    }
+    /* Reposition features to below phone on small screens */
+    .dc-features-left {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      gap: 0;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .dc-feature {
+      font-size: 8px;
+      text-align: center;
+      flex: 0 0 30%;
+    }
+    .dc-phone-mockup {
+      width: clamp(140px, 42vw, 200px);
+      height: clamp(260px, 80vw, 380px);
+      border-radius: 24px;
+    }
+    .dc-bottom {
+      padding: 12px 16px 20px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .dc-tabs {
+      gap: 16px;
+    }
+    /* Restructure dc-body to stack nicely */
+    #dc-phone-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ─ SLIDE 7: TESTIMONIAL ─ */
+    .testi-body {
+      padding: 24px 16px 0;
+    }
+    .receipt-card {
+      padding: 32px 20px 40px;
+    }
+    .quote-text {
+      font-size: clamp(18px, 5.5vw, 24px);
+    }
+    .testi-explore {
+      padding: 14px 32px;
+      font-size: 10px;
+    }
+    .testi-bottom-nav {
+      padding: 12px 16px 20px;
+    }
+    .quote-avatars {
+      margin-top: 16px;
+    }
+
+    /* ─ SLIDE 8: COMPARISON ─ */
+    .comp-body {
+      padding: 20px 14px;
+    }
+    .comp-heading {
+      font-size: clamp(24px, 7.5vw, 36px);
+    }
+    .comp-table {
+      width: 100%;
+      table-layout: fixed;
+    }
+    .comp-table th {
+      font-size: 8px;
+      letter-spacing: 1px;
+      padding: 10px 5px;
+    }
+    .comp-table td {
+      padding: 14px 5px;
+      font-size: 13px;
+    }
+    .comp-table td.feature-col {
+      font-size: 11px;
+      word-break: break-word;
+    }
+    .comp-table th.feature-col,
+    .comp-table td.feature-col {
+      width: 38%;
+    }
+    .comp-bottom-tabs {
+      padding: 12px 12px 20px;
+      gap: 4px;
+    }
+    .comp-tab {
+      font-size: 8px;
+      letter-spacing: 1px;
+    }
+
+    /* ─ SLIDE 9: SCALABILITY ─ */
+    .scale-body {
+      padding: 16px 16px;
+    }
+    .scale-title {
+      font-size: clamp(30px, 8.5vw, 44px);
+    }
+    .scale-desc {
+      font-size: clamp(14px, 4vw, 17px);
+      margin-bottom: 18px;
+    }
+    .growth-card {
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .growth-roi {
+      font-size: clamp(20px, 6vw, 26px);
+    }
+    .scale-features {
+      gap: 16px;
+    }
+    .scale-feature-desc {
+      font-size: 13px;
+    }
+    .scale-bottom {
+      padding: 16px 16px 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .continue-btn {
+      font-size: 13px;
+      padding: 12px 22px;
+    }
+
+    /* ─ SLIDE 10: CTA ─ */
+    #slide10 > .cta-top {
+      padding: 32px 16px 0 !important;
+    }
+    #cta-form-wrap {
+      width: 100%;
+      max-width: 100%;
+      padding: 0 4px;
+    }
+    .cta-bottom {
+      padding: 24px 16px;
+    }
+    .cta-tagline {
+      font-size: 9px;
+      letter-spacing: 4px;
+    }
+
+    /* ─ NAV BARS (all sections) ─ */
+    .slide-nav, .shift-nav, .hiw-nav, .pillars-nav,
+    .dc-nav, .testi-nav, .comp-nav, .scale-nav {
+      padding: 14px 16px;
+    }
+    .bottom-nav {
+      padding: 12px 16px 20px;
+    }
+    .bottom-nav-item {
+      font-size: 8px;
+      letter-spacing: 1px;
+    }
+
+    /* ─ ORBs: reduce on mobile to prevent overflow ─ */
+    .orb-1 { width: 160px; height: 160px; right: -40px; top: -40px; }
+    .orb-2 { width: 100px; height: 100px; left: -30px; }
+    .orb-3 { width: 70px; height: 70px; }
+    .orb-4 { width: 120px; height: 120px; left: -40px; }
+    .orb-5 { width: 80px; height: 80px; }
+  }
+
+  /* ── SMALL MOBILE (≤ 480px) ── */
+  @media (max-width: 480px) {
+    .hero-title { font-size: clamp(16px, 5.2vw, 22px); }
+    .btn-primary { font-size: 10px; padding: 14px 28px; letter-spacing: 2px; }
+    .hero-content { padding: 60px 16px 28px; }
+    .hero-brand-overlay { font-size: clamp(48px, 16vw, 85px); letter-spacing: 2px; margin-bottom: 24px; }
+
+    .problem-title { font-size: clamp(26px, 8.5vw, 36px); }
+    .problem-text { font-size: clamp(14px, 4.2vw, 18px); }
+    .compare-label { font-size: clamp(14px, 4.2vw, 18px); }
+    .slide-body { padding: 20px 14px; }
+
+    .shift-title { font-size: clamp(26px, 8.5vw, 36px); }
+    .flow-circle { width: clamp(78px, 24vw, 100px); height: clamp(78px, 24vw, 100px); font-size: 8px; letter-spacing: 1.5px; }
+    .shift-desc { font-size: clamp(13px, 3.8vw, 16px); }
+    .shift-body { padding: 20px 14px; }
+
+    .hiw-card > div { width: 92vw !important; }
+
+    .pillars-title { font-size: clamp(22px, 7vw, 30px); }
+    .pillar-name { font-size: clamp(14px, 4.5vw, 18px); }
+    .pillar-text { font-size: 10px; }
+    .pillar-number { font-size: clamp(14px, 5vw, 20px); }
+    .pillars-body { padding: 12px 14px; }
+
+    .dc-title { font-size: clamp(20px, 6.5vw, 28px); }
+    .dc-phone-mockup { width: clamp(130px, 38vw, 170px); height: clamp(240px, 72vw, 320px); }
+    .dc-features-left { gap: 0; }
+    .dc-feature { font-size: 7px; flex: 0 0 33%; }
+    .dc-body { padding: 12px 14px 0; }
+
+    .quote-text { font-size: clamp(16px, 5vw, 21px); }
+    .receipt-card { padding: 28px 16px 36px; }
+    .testi-body { padding: 20px 14px 0; }
+
+    .comp-heading { font-size: clamp(22px, 7.5vw, 30px); }
+    .comp-table th { font-size: 7px; letter-spacing: 0.5px; padding: 8px 4px; }
+    .comp-table td { padding: 12px 4px; font-size: 12px; }
+    .comp-table td.feature-col { font-size: 10px; }
+    .comp-body { padding: 16px 12px; }
+
+    .scale-title { font-size: clamp(28px, 8.5vw, 38px); }
+    .scale-desc { font-size: clamp(13px, 3.8vw, 15px); }
+    .scale-body { padding: 14px 14px; }
+    .growth-roi { font-size: clamp(18px, 5.5vw, 24px); }
+
+    .cta-logo { font-size: clamp(36px, 12vw, 52px); }
+    #slide10 > .cta-top { padding: 24px 12px 0 !important; }
+
+    .nav1 { padding: 12px 14px; }
+    .slide-nav, .shift-nav, .hiw-nav, .pillars-nav, .dc-nav,
+    .testi-nav, .comp-nav, .scale-nav { padding: 12px 14px; }
+    .bottom-nav { padding: 10px 14px 18px; }
+    .bottom-nav-item { font-size: 7px; letter-spacing: 0.8px; }
+    .pillars-tabs { padding: 10px 14px; }
+    .dc-bottom { padding: 10px 14px 18px; }
+    .testi-bottom-nav { padding: 10px 14px 18px; }
+    .comp-bottom-tabs { padding: 10px 10px 18px; }
+    .scale-bottom { padding: 14px 14px 22px; }
+    .shift-bottom { padding: 14px 14px 22px; }
+
+    /* Why section smaller */
+    .why-marquee-inner h1 { font-size: 14vw; }
+    .why-side-title { font-size: clamp(22px, 6.5vw, 34px); }
+    .why-img-box { height: 52vw; min-height: 180px; }
+    .why-header-fixed { height: 160px; }
+    .why-sub-header { top: 160px; }
+  }
+
+  /* ── EXTRA SMALL (≤ 360px) ── */
   @media (max-width: 360px) {
-    .hero-title { font-size: 19.6px; }
+    .hero-title { font-size: 15px; }
+    .hero-brand-overlay { font-size: 46px; letter-spacing: 1px; }
+    .btn-primary { padding: 12px 22px; font-size: 10px; }
+
     .pillar-cards { flex-direction: column; }
-    .pillar-card { flex-direction: row; align-items: flex-start; gap: 12px; }
-    .dc-phone-mockup { width: 130px; height: 250px; }
-    .dc-features-left { display: none; }
+    .pillar-card { flex-direction: row; align-items: flex-start; gap: 10px; }
+
+    .dc-phone-mockup { width: 120px; height: 225px; }
+    .dc-features-left { display: none !important; }
+    #dc-phone-wrapper { margin-top: 10px; }
+
+    .comp-table th { font-size: 6px; padding: 6px 3px; }
+    .comp-table td { padding: 10px 3px; font-size: 11px; }
+    .comp-table td.feature-col { font-size: 9px; }
+
+    .why-marquee-inner h1 { font-size: 15vw; }
+    .flow-circle { width: 72px; height: 72px; font-size: 7px; }
+    .scale-title { font-size: 26px; }
+  }
+
+  /* ── LARGE DESKTOP (≥ 1440px) ── */
+  @media (min-width: 1440px) {
+    .slide-body { padding: 48px 40px; }
+    .shift-body { padding: 48px 40px; }
+    .pillars-body { padding: 24px 36px; }
+    .scale-body { padding: 36px 40px; }
+    .comp-body { padding: 48px 40px; }
+    .dc-body { padding: 36px 40px 0; }
+    .testi-body { padding: 48px 40px 0; }
+    .hero-content { padding: 100px 48px 48px; }
+    .problem-title { font-size: 52px; }
+    .shift-title { font-size: 52px; }
+    .comp-heading { font-size: 48px; }
+    .scale-title { font-size: 56px; }
+    .dc-title { font-size: 44px; }
+    .why-project-row { padding: 12vh 8vw; }
+    .why-side-text { width: 28%; }
+    .why-img-box { width: 62%; height: 72vh; }
   }
 
   /* Separator line in step area */
@@ -2856,6 +3321,34 @@ void main() {
   setTimeout(() => {
     document.documentElement.style.scrollBehavior = 'smooth';
   }, 500);
+
+  /* ── MOBILE: DC features repositioning ──
+     On screens ≤ 768px the .dc-features-left shifts to static flow
+     via CSS, but we also need to clear the absolute positioning
+     that JS might have set inline. */
+  function applyMobileDCLayout() {
+    const dcFeatures = document.getElementById('dc-features-left');
+    if (!dcFeatures) return;
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      dcFeatures.style.position = 'static';
+      dcFeatures.style.top = 'auto';
+      dcFeatures.style.left = 'auto';
+      dcFeatures.style.flexDirection = 'row';
+      dcFeatures.style.justifyContent = 'space-around';
+      dcFeatures.style.gap = '0';
+      dcFeatures.style.width = '100%';
+      dcFeatures.style.flexWrap = 'wrap';
+      // Move it after the phone wrapper
+      const phoneWrapper = document.getElementById('dc-phone-wrapper');
+      const dcBody = document.querySelector('.dc-body');
+      if (phoneWrapper && dcBody && dcFeatures.parentNode === phoneWrapper) {
+        dcBody.appendChild(dcFeatures);
+      }
+    }
+  }
+  applyMobileDCLayout();
+  window.addEventListener('resize', applyMobileDCLayout);
 
   /* ── BUTTON VISIBILITY SAFETY NET ──
      GSAP .from() sets opacity:0 as an inline style immediately.
